@@ -14,6 +14,7 @@ interface NonProfitJsonLd {
   name: string;
   legalName: string;
   url: string;
+  logo: string;
   description: string;
   taxID?: string;
   address?: {
@@ -36,6 +37,7 @@ export function buildOrganizationJsonLd(): NonProfitJsonLd {
     name: site.name,
     legalName: site.legalName,
     url: site.url,
+    logo: new URL(site.logoPath, site.url).toString(),
     description: site.mission,
   };
 

@@ -22,6 +22,13 @@ export const site = {
   /** Canonical domain. Update astro.config.mjs `site` to match. */
   url: 'https://chinquapin.foundation',
 
+  /**
+   * Path (relative to site.url) to the logo image used in Schema.org JSON-LD.
+   * Google's guidance: PNG/JPG, square-ish, at least 112x112. Our raster export
+   * at /logo.png satisfies that. If you ever rename the file, update this.
+   */
+  logoPath: '/logo.png',
+
   /** Used verbatim wherever the mission is quoted. */
   mission:
     'Rooted in faith, our mission is to serve women, children, and veterans in East Texas by offering hope, resources, and opportunities that strengthen families and reflect God’s purpose.',
