@@ -1,18 +1,24 @@
 ---
 /**
- * Home hero — the large illustrated/photographic banner at the top of the page.
+ * Home hero — the large photographic banner at the top of the page.
  *
- * Currently renders the inline SVG `HeroIllustration` as a placeholder. To
- * swap in a real photograph later: drop `public/hero.jpg` (and ideally a
- * WebP variant) into the project, then replace the <HeroIllustration /> call
- * below with a <picture> element. Keep the same wrapper aspect ratio so the
- * page layout doesn't reflow.
+ * Source photo lives at src/assets/hero.png and is processed through Astro's
+ * Image pipeline: it ships as a responsive WebP with srcset entries for
+ * common viewport widths. That drops the 3+ MB original to a few hundred KB
+ * for typical visitors.
+ *
+ * Aspect ratio steps from 4:3 on mobile (close to the native photo aspect)
+ * to 16:9 on tablet+ so the foreground daffodils and the cabin both stay in
+ * frame. Object-position is biased slightly below center so the daffodils
+ * don't get cropped off the bottom.
  *
  * The optional `overlayKicker` and `overlayHeadline` render as a subtle
- * caption at the bottom-left of the hero — handy on inner pages.
+ * caption at the bottom-left of the hero — handy on inner pages. A soft
+ * gradient under the overlay keeps the text legible against bright sky.
  */
 
-import HeroIllustration from '@components/ui/HeroIllustration.astro';
+import { Image } from 'astro:assets';
+import heroPhoto from '@assets/hero.png';
 
 interface Props {
   overlayKicker?: string;
@@ -24,27 +30,38 @@ const hasOverlay = Boolean(overlayKicker || overlayHeadline);
 ---
 
 <section
-  class="relative w-full overflow-hidden aspect-[16/9] sm:aspect-[2/1] lg:aspect-[20/9]"
+  class="relative w-full overflow-hidden aspect-[4/3] sm:aspect-[16/9]"
   aria-label="Hero"
 >
-  <HeroIllustration />
+  <Image
+    src={heroPhoto}
+    alt="A still pond reflecting trees and blue sky, with a wooden cabin nestled on the far shore and yellow daffodils in the foreground."
+    class="absolute inset-0 h-full w-full object-cover object-[center_60%]"
+    widths={[640, 960, 1280, 1600]}
+    sizes="(min-width: 1024px) calc(100vw - 280px), 100vw"
+    loading="eager"
+    fetchpriority="high"
+  />
 
   {
     hasOverlay && (
-      <div class="absolute inset-x-0 bottom-0 p-6 sm:p-10 lg:p-14">
-        <div class="max-w-2xl">
-          {overlayKicker && (
-            <p class="text-xs sm:text-sm tracking-[0.3em] uppercase text-paper/90 drop-shadow">
-              {overlayKicker}
-            </p>
-          )}
-          {overlayHeadline && (
-            <h1 class="mt-2 font-serif text-3xl sm:text-4xl lg:text-5xl text-paper drop-shadow-md leading-tight">
-              {overlayHeadline}
-            </h1>
-          )}
+      <>
+        <div class="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-primary-deep/70 via-primary-deep/30 to-transparent" />
+        <div class="absolute inset-x-0 bottom-0 p-6 sm:p-10 lg:p-14">
+          <div class="max-w-2xl">
+            {overlayKicker && (
+              <p class="text-xs sm:text-sm tracking-[0.3em] uppercase text-paper/95 drop-shadow">
+                {overlayKicker}
+              </p>
+            )}
+            {overlayHeadline && (
+              <h1 class="mt-2 font-serif text-3xl sm:text-4xl lg:text-5xl text-paper drop-shadow-md leading-tight">
+                {overlayHeadline}
+              </h1>
+            )}
+          </div>
         </div>
-      </div>
+      </>
     )
   }
 </section>
