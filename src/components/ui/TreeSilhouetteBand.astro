@@ -1,12 +1,13 @@
 ---
 /**
  * Decorative band of stylized chinquapin tree silhouettes — used as a
- * graphic break at the bottom of dark-background panels. Echoes the
- * tree shape in the logo without copying it directly.
+ * graphic break at the bottom of dark-background panels. The crowns sit
+ * above a thin ground line, with visible trunks so the shapes read as
+ * trees rather than floating ovals.
  *
- * Renders as an inline SVG that fills its container's width. The default
+ * Renders as an inline SVG that fills its container's width. Default
  * fill is the deepest brand green so it reads as a darker silhouette
- * against the surrounding panel.
+ * against whatever panel it caps.
  */
 
 interface Props {
@@ -17,43 +18,72 @@ interface Props {
 }
 
 const { fill = '#243319', class: className = '' } = Astro.props;
+
+// Tree positions and sizes — varied so the band doesn't feel mechanical.
+// crownR is the foliage radius; trunkH is how tall the visible trunk is
+// below the crown; trunkW is trunk width. All coordinates assume a
+// 1600-wide viewBox with the ground line at y=120.
+interface Tree {
+  cx: number;
+  crownR: number;
+  trunkH: number;
+  trunkW: number;
+}
+
+const trees: readonly Tree[] = [
+  { cx: 50, crownR: 38, trunkH: 22, trunkW: 7 },
+  { cx: 130, crownR: 48, trunkH: 26, trunkW: 9 },
+  { cx: 230, crownR: 32, trunkH: 18, trunkW: 6 },
+  { cx: 310, crownR: 44, trunkH: 24, trunkW: 8 },
+  { cx: 410, crownR: 36, trunkH: 20, trunkW: 7 },
+  { cx: 500, crownR: 52, trunkH: 30, trunkW: 10 },
+  { cx: 610, crownR: 40, trunkH: 22, trunkW: 8 },
+  { cx: 700, crownR: 30, trunkH: 16, trunkW: 6 },
+  { cx: 780, crownR: 46, trunkH: 26, trunkW: 9 },
+  { cx: 880, crownR: 34, trunkH: 20, trunkW: 7 },
+  { cx: 970, crownR: 48, trunkH: 28, trunkW: 9 },
+  { cx: 1070, crownR: 38, trunkH: 22, trunkW: 7 },
+  { cx: 1170, crownR: 44, trunkH: 24, trunkW: 8 },
+  { cx: 1260, crownR: 32, trunkH: 18, trunkW: 6 },
+  { cx: 1340, crownR: 50, trunkH: 28, trunkW: 10 },
+  { cx: 1450, crownR: 36, trunkH: 20, trunkW: 7 },
+  { cx: 1550, crownR: 42, trunkH: 24, trunkW: 8 },
+];
+
+const groundY = 120;
 ---
 
 <div class={`pointer-events-none ${className}`} aria-hidden="true">
   <svg
-    viewBox="0 0 1600 120"
+    viewBox="0 0 1600 130"
     preserveAspectRatio="none"
     xmlns="http://www.w3.org/2000/svg"
-    class="block w-full h-16 sm:h-20 lg:h-24"
+    class="block w-full h-20 sm:h-24"
   >
     <g fill={fill}>
-      {/* Ground band */}
-      <rect x="0" y="100" width="1600" height="20" />
-      {/* Tree silhouettes — varied sizes */}
-      <ellipse cx="80" cy="70" rx="50" ry="55" />
-      <rect x="76" y="70" width="8" height="40" />
-      <ellipse cx="220" cy="58" rx="42" ry="48" />
-      <rect x="217" y="58" width="6" height="50" />
-      <ellipse cx="340" cy="78" rx="38" ry="40" />
-      <rect x="337" y="78" width="6" height="32" />
-      <ellipse cx="460" cy="64" rx="55" ry="58" />
-      <rect x="456" y="64" width="8" height="44" />
-      <ellipse cx="600" cy="76" rx="42" ry="44" />
-      <rect x="597" y="76" width="6" height="34" />
-      <ellipse cx="730" cy="60" rx="50" ry="52" />
-      <rect x="726" y="60" width="8" height="50" />
-      <ellipse cx="860" cy="74" rx="40" ry="42" />
-      <rect x="857" y="74" width="6" height="34" />
-      <ellipse cx="980" cy="58" rx="46" ry="50" />
-      <rect x="977" y="58" width="6" height="50" />
-      <ellipse cx="1110" cy="78" rx="38" ry="40" />
-      <rect x="1107" y="78" width="6" height="32" />
-      <ellipse cx="1230" cy="62" rx="52" ry="54" />
-      <rect x="1226" y="62" width="8" height="46" />
-      <ellipse cx="1370" cy="74" rx="42" ry="44" />
-      <rect x="1367" y="74" width="6" height="36" />
-      <ellipse cx="1500" cy="60" rx="48" ry="52" />
-      <rect x="1496" y="60" width="8" height="48" />
+      {/* Ground band — thin baseline so the trees aren't floating. */}
+      <rect x="0" y={groundY - 4} width="1600" height="14" />
+
+      {
+        trees.map((tree) => {
+          const crownCy = groundY - tree.trunkH;
+          const trunkX = tree.cx - tree.trunkW / 2;
+          const trunkY = crownCy;
+          return (
+            <>
+              {/* Trunk — drawn first so the crown sits on top */}
+              <rect x={trunkX} y={trunkY} width={tree.trunkW} height={tree.trunkH} />
+              {/* Crown — slightly taller than wide so it reads as a tree, not an egg */}
+              <ellipse
+                cx={tree.cx}
+                cy={crownCy - tree.crownR * 0.5}
+                rx={tree.crownR}
+                ry={tree.crownR * 1.05}
+              />
+            </>
+          );
+        })
+      }
     </g>
   </svg>
 </div>

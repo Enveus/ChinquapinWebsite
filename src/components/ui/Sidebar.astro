@@ -38,13 +38,39 @@ function isCurrent(href: string): boolean {
       id="nav-toggle"
       aria-controls="primary-nav"
       aria-expanded="false"
+      data-nav-open="false"
       class="inline-flex items-center justify-center rounded-md p-2 text-primary hover:bg-sage/10"
     >
-      <span class="sr-only">Open navigation</span>
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+      <span class="sr-only" id="nav-toggle-label">Open navigation</span>
+      <svg
+        id="nav-toggle-icon-menu"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        aria-hidden="true"
+      >
         <line x1="4" y1="7" x2="20" y2="7" />
         <line x1="4" y1="12" x2="20" y2="12" />
         <line x1="4" y1="17" x2="20" y2="17" />
+      </svg>
+      <svg
+        id="nav-toggle-icon-close"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        aria-hidden="true"
+        class="hidden"
+      >
+        <line x1="6" y1="6" x2="18" y2="18" />
+        <line x1="18" y1="6" x2="6" y2="18" />
       </svg>
     </button>
   </div>
@@ -73,13 +99,19 @@ function isCurrent(href: string): boolean {
         primaryNav.map((item) => {
           const active = isCurrent(item.href);
           const itemClasses = [
-            'block rounded-md px-4 py-2 text-center no-underline transition-colors',
+            'relative block rounded-md px-4 py-2.5 text-center no-underline transition-colors',
             active
-              ? 'bg-sage/20 text-primary font-semibold'
+              ? 'bg-sage/25 text-primary font-semibold'
               : 'text-primary-deep hover:bg-sage/10 hover:text-primary',
           ].join(' ');
           return (
-            <li>
+            <li class="relative">
+              {active && (
+                <span
+                  class="absolute left-0 top-1/2 -translate-y-1/2 h-5 w-1 rounded-r bg-sunflower"
+                  aria-hidden="true"
+                />
+              )}
               <a href={item.href} class={itemClasses} aria-current={active ? 'page' : undefined}>
                 {item.label}
               </a>
@@ -99,10 +131,18 @@ function isCurrent(href: string): boolean {
 <script>
   const toggle = document.getElementById('nav-toggle');
   const nav = document.getElementById('primary-nav');
-  if (toggle && nav) {
+  const iconMenu = document.getElementById('nav-toggle-icon-menu');
+  const iconClose = document.getElementById('nav-toggle-icon-close');
+  const label = document.getElementById('nav-toggle-label');
+
+  if (toggle && nav && iconMenu && iconClose && label) {
     toggle.addEventListener('click', () => {
       const isNowHidden = nav.classList.toggle('hidden');
-      toggle.setAttribute('aria-expanded', String(!isNowHidden));
+      const isOpen = !isNowHidden;
+      toggle.setAttribute('aria-expanded', String(isOpen));
+      iconMenu.classList.toggle('hidden', isOpen);
+      iconClose.classList.toggle('hidden', !isOpen);
+      label.textContent = isOpen ? 'Close navigation' : 'Open navigation';
     });
   }
 </script>

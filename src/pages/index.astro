@@ -47,7 +47,7 @@ const audiences: readonly Audience[] = [
 
   <WelcomeSection kicker="Welcome to" heading={site.name}>
     <p>{site.mission}</p>
-    <p class="text-paper/80">
+    <p>
       We're a Texas nonprofit corporation rooted in East Texas. Our work serves
       women, children, and veterans through partnerships with churches, Christian
       ministries, and community groups.
@@ -55,30 +55,36 @@ const audiences: readonly Audience[] = [
   </WelcomeSection>
 
   <section class="bg-paper">
-    <div class="mx-auto max-w-6xl px-6 sm:px-10 lg:px-14 py-16 sm:py-20 lg:py-24">
-      <p class="text-xs tracking-[0.3em] uppercase text-sage text-center">Who we serve</p>
-      <h2 class="mt-3 font-serif text-3xl sm:text-4xl text-primary text-center">
-        Three audiences. One mission.
-      </h2>
-      <p class="mt-4 mx-auto max-w-2xl text-center text-primary-deep/80">
-        Every program we build is shaped by the people it serves. Here's who's at the
-        center of our work.
-      </p>
+    <div class="mx-auto max-w-6xl px-6 sm:px-10 lg:px-14 py-20 sm:py-24 lg:py-28">
+      <div class="text-center">
+        <p class="font-serif italic text-sage text-lg sm:text-xl">Who we serve</p>
+        <h2 class="mt-2 font-serif text-4xl sm:text-5xl text-primary">
+          Three audiences. <span class="italic text-accent">One mission.</span>
+        </h2>
+        <span class="mt-5 inline-block h-1 w-16 bg-sunflower rounded-full" aria-hidden="true"></span>
+        <p class="mt-6 mx-auto max-w-2xl text-ink text-lg leading-relaxed">
+          Every program we build is shaped by the people it serves. Here's who's at the
+          center of our work.
+        </p>
+      </div>
 
-      <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <div class="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {
           audiences.map((audience) => (
             <a
               href={audience.href}
-              class="group block rounded-xl border border-sage/30 bg-paper p-6 no-underline transition-shadow hover:shadow-lg hover:border-accent/50"
+              class="group block rounded-2xl border border-sage/30 bg-paper p-7 no-underline transition-all duration-200 hover:shadow-xl hover:-translate-y-0.5 hover:border-accent/60"
             >
-              <h3 class="font-serif text-2xl text-primary group-hover:text-accent transition-colors">
+              <h3 class="font-serif text-3xl text-primary group-hover:text-accent transition-colors">
                 {audience.title}
               </h3>
-              <p class="mt-3 text-primary-deep/80 text-sm leading-relaxed">
+              <span class="mt-3 block h-0.5 w-10 bg-sunflower rounded-full" aria-hidden="true"></span>
+              <p class="mt-5 text-ink text-base leading-relaxed">
                 {audience.blurb}
               </p>
-              <p class="mt-4 text-accent text-sm font-semibold">Learn more &rarr;</p>
+              <p class="mt-5 text-accent text-sm font-semibold tracking-wide">
+                Learn more <span aria-hidden="true">&rarr;</span>
+              </p>
             </a>
           ))
         }

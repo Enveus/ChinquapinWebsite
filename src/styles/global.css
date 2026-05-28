@@ -5,14 +5,17 @@
  * Tailwind v4 via the `@theme` block. Reach for tokens (`--color-primary`,
  * `bg-primary`, `text-primary`) instead of literal hex values anywhere in
  * the app. The palette is the source of truth — see CLAUDE.md for usage rules.
+ *
+ * Rule: avoid styling bare element selectors (h1, a, etc.) with anything
+ * components might need to override — Tailwind v4 emits utilities at low
+ * specificity, so a bare-element rule will silently override `text-paper`,
+ * `no-underline`, and similar utilities. Component-level utilities must win.
  */
 
 @import 'tailwindcss';
 
 @theme {
-  /* Brand palette — sampled from the official logo SVG (public/logo.svg).
-     The earlier hex values were visual estimates; these are the actual
-     fills used in the logo's vector source. */
+  /* Brand palette — sampled from the official logo SVG (public/logo.svg). */
   --color-primary: #3e4d28;        /* Wordmark + hill shadow — headings, primary CTAs */
   --color-primary-deep: #425031;   /* Tree trunk + branches — footer, high-contrast text */
   --color-accent: #58754b;         /* Foliage / hills — accents, hover, links */
@@ -46,20 +49,33 @@ body {
   flex-direction: column;
 }
 
+/* Heading typography family only.
+   We deliberately do NOT set `color` here — Tailwind v4 emits text-* utilities
+   at low specificity (inside :where()), so a bare `h2 { color: ... }` would
+   beat `class="text-paper"` and silently break every component that picks a
+   non-default heading color. Components own their own color. */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-serif);
-  color: var(--color-primary);
+  font-weight: 500;
   letter-spacing: -0.01em;
+  line-height: 1.15;
 }
 
-a {
+/* Anchors are bare by default. Components opt into underline via the
+   `underline` utility, or content inside `.prose-content` gets the
+   traditional underlined-link treatment. Sidebar nav, audience cards,
+   logo wordmark — all of those use no-underline cleanly. */
+
+/* Body copy / article scope — anywhere we drop paragraphs of marketing
+   prose we wrap them in `.prose-content` to get sensible link styling
+   and rhythm. */
+.prose-content a {
   color: var(--color-accent);
   text-decoration: underline;
   text-decoration-thickness: 1px;
   text-underline-offset: 0.2em;
 }
-
-a:hover {
+.prose-content a:hover {
   color: var(--color-primary);
 }
 

@@ -5,34 +5,25 @@
  * Renders the org name, optional address/contact (omitted when unknown),
  * the 501(c)(3) disclosure with EIN (omitted when unknown), and a small
  * copyright line. We deliberately render less rather than render fake.
+ *
+ * Disclosure text uses solid colors (not opacity modifiers) so contrast
+ * stays predictable against the dark footer background.
  */
 
 import { site } from '@config/site';
 
 const year = new Date().getFullYear();
 const address = site.address;
-
-function buildStatusLine(): string {
-  if (site.taxExempt501c3 && site.ein) {
-    return `A 501(c)(3) nonprofit — EIN ${site.ein}.`;
-  }
-  if (site.ein) {
-    return `Texas nonprofit corporation, EIN ${site.ein}. Federal 501(c)(3) status pending.`;
-  }
-  return 'Texas nonprofit corporation. Federal 501(c)(3) status pending.';
-}
-
-const statusLine = buildStatusLine();
 ---
 
 <footer class="mt-16 bg-primary-deep text-paper">
-  <div class="mx-auto max-w-6xl px-4 py-10 grid gap-8 sm:grid-cols-2">
+  <div class="mx-auto max-w-6xl px-6 sm:px-10 lg:px-14 py-12 grid gap-10 sm:grid-cols-2">
     <div>
-      <p class="font-serif text-xl text-paper">{site.name}</p>
-      <p class="mt-2 max-w-prose text-sm text-paper/80">{site.tagline}</p>
+      <p class="font-serif text-2xl text-paper">{site.name}</p>
+      <p class="mt-3 max-w-prose text-sm text-cream">{site.tagline}</p>
     </div>
 
-    <div class="text-sm text-paper/80 space-y-2">
+    <div class="text-sm text-cream space-y-3">
       {
         address && (
           <p>
@@ -42,9 +33,39 @@ const statusLine = buildStatusLine();
           </p>
         )
       }
-      {site.contact.email && <p><a class="text-water" href={`mailto:${site.contact.email}`}>{site.contact.email}</a></p>}
-      {site.contact.phone && <p><a class="text-water" href={`tel:${site.contact.phone}`}>{site.contact.phone}</a></p>}
-      <p>&copy; {year} {site.legalName}. {statusLine}</p>
+      {
+        site.contact.email && (
+          <p>
+            <a class="text-water underline underline-offset-2" href={`mailto:${site.contact.email}`}>
+              {site.contact.email}
+            </a>
+          </p>
+        )
+      }
+      {
+        site.contact.phone && (
+          <p>
+            <a class="text-water underline underline-offset-2" href={`tel:${site.contact.phone}`}>
+              {site.contact.phone}
+            </a>
+          </p>
+        )
+      }
+    </div>
+  </div>
+
+  <div class="border-t border-paper/15">
+    <div class="mx-auto max-w-6xl px-6 sm:px-10 lg:px-14 py-5 text-xs text-cream flex flex-col sm:flex-row sm:justify-between gap-2">
+      <p>&copy; {year} {site.legalName}.</p>
+      <p>
+        {
+          site.taxExempt501c3 && site.ein
+            ? `A 501(c)(3) nonprofit · EIN ${site.ein}`
+            : site.ein
+              ? `Texas nonprofit corporation · EIN ${site.ein} · Federal 501(c)(3) status pending`
+              : 'Texas nonprofit corporation · Federal 501(c)(3) status pending'
+        }
+      </p>
     </div>
   </div>
 </footer>

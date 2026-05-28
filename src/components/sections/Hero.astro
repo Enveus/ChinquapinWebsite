@@ -30,7 +30,7 @@ const hasOverlay = Boolean(overlayKicker || overlayHeadline);
 ---
 
 <section
-  class="relative w-full overflow-hidden aspect-[4/3] sm:aspect-[16/9]"
+  class="relative w-full overflow-hidden h-[55vh] sm:h-[60vh] lg:h-[68vh] max-h-[680px] min-h-[320px]"
   aria-label="Hero"
 >
   <Image
@@ -46,18 +46,21 @@ const hasOverlay = Boolean(overlayKicker || overlayHeadline);
   {
     hasOverlay && (
       <>
-        <div class="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-primary-deep/70 via-primary-deep/30 to-transparent" />
+        <div class="pointer-events-none absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-primary-deep/85 via-primary-deep/50 to-transparent" />
         <div class="absolute inset-x-0 bottom-0 p-6 sm:p-10 lg:p-14">
-          <div class="max-w-2xl">
+          <div class="max-w-3xl">
             {overlayKicker && (
-              <p class="text-xs sm:text-sm tracking-[0.3em] uppercase text-paper/95 drop-shadow">
+              <p class="font-serif italic text-water text-lg sm:text-xl drop-shadow">
                 {overlayKicker}
               </p>
             )}
             {overlayHeadline && (
-              <h1 class="mt-2 font-serif text-3xl sm:text-4xl lg:text-5xl text-paper drop-shadow-md leading-tight">
+              <h1 class="mt-2 font-serif text-4xl sm:text-5xl lg:text-6xl text-paper drop-shadow-md leading-[1.05]">
                 {overlayHeadline}
               </h1>
+            )}
+            {overlayHeadline && (
+              <span class="mt-5 block h-1 w-16 bg-sunflower rounded-full" aria-hidden="true"></span>
             )}
           </div>
         </div>
