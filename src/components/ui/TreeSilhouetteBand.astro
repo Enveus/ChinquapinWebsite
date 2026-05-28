@@ -66,19 +66,20 @@ const groundY = 120;
 
       {
         trees.map((tree) => {
-          const crownCy = groundY - tree.trunkH;
+          // Trunk anchors at the ground; crown sits directly above the trunk
+          // so neither overlaps the other.
           const trunkX = tree.cx - tree.trunkW / 2;
-          const trunkY = crownCy;
+          const trunkTop = groundY - tree.trunkH;
+          const crownBottom = trunkTop + tree.crownR * 0.3; // small overlap into trunk for solid join
+          const crownCy = crownBottom - tree.crownR;
           return (
             <>
-              {/* Trunk — drawn first so the crown sits on top */}
-              <rect x={trunkX} y={trunkY} width={tree.trunkW} height={tree.trunkH} />
-              {/* Crown — slightly taller than wide so it reads as a tree, not an egg */}
+              <rect x={trunkX} y={trunkTop} width={tree.trunkW} height={tree.trunkH} />
               <ellipse
                 cx={tree.cx}
-                cy={crownCy - tree.crownR * 0.5}
-                rx={tree.crownR}
-                ry={tree.crownR * 1.05}
+                cy={crownCy}
+                rx={tree.crownR * 0.9}
+                ry={tree.crownR}
               />
             </>
           );
