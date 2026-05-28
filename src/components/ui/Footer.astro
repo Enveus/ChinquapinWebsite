@@ -11,6 +11,18 @@ import { site } from '@config/site';
 
 const year = new Date().getFullYear();
 const address = site.address;
+
+function buildStatusLine(): string {
+  if (site.taxExempt501c3 && site.ein) {
+    return `A 501(c)(3) nonprofit — EIN ${site.ein}.`;
+  }
+  if (site.ein) {
+    return `Texas nonprofit corporation, EIN ${site.ein}. Federal 501(c)(3) status pending.`;
+  }
+  return 'Texas nonprofit corporation. Federal 501(c)(3) status pending.';
+}
+
+const statusLine = buildStatusLine();
 ---
 
 <footer class="mt-16 bg-primary-deep text-paper">
@@ -32,14 +44,7 @@ const address = site.address;
       }
       {site.contact.email && <p><a class="text-water" href={`mailto:${site.contact.email}`}>{site.contact.email}</a></p>}
       {site.contact.phone && <p><a class="text-water" href={`tel:${site.contact.phone}`}>{site.contact.phone}</a></p>}
-      <p>
-        &copy; {year} {site.legalName}.
-        {
-          site.ein
-            ? ` A 501(c)(3) nonprofit — EIN ${site.ein}.`
-            : ' Texas nonprofit corporation. Federal 501(c)(3) status pending.'
-        }
-      </p>
+      <p>&copy; {year} {site.legalName}. {statusLine}</p>
     </div>
   </div>
 </footer>

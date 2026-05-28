@@ -33,10 +33,19 @@ export const site = {
   servesAudiences: ['women', 'children', 'veterans'] as const,
 
   /**
-   * IRS Employer Identification Number.
-   * TODO(owner): provide EIN. Required for footer disclosure and JSON-LD.
+   * IRS Employer Identification Number (federal tax ID).
+   * Distinct from the Texas Comptroller taxpayer number — donors need
+   * the federal EIN, not the state number, to substantiate deductions.
    */
-  ein: null as string | null,
+  ein: '41-4375241' as string | null,
+
+  /**
+   * Whether the IRS has issued the 501(c)(3) determination letter
+   * (Letter 947). The EIN above is just the federal identifier; this
+   * flag controls whether the site claims federal tax-exempt status.
+   * TODO(owner): flip to true once Letter 947 is received.
+   */
+  taxExempt501c3: false as boolean,
 
   /**
    * Mailing/physical address used in footer, contact page, and JSON-LD.

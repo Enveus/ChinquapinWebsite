@@ -20,10 +20,15 @@ Live domain: **chinquapin.foundation** (registered on Porkbun).
 - Eric Estes
 - Cornelia Estes
 - Adriana Estes
+**Federal EIN:** 41-4375241 (issued by the IRS).
 **Status:** Texas nonprofit corporation organized under Chapter 22 of the Texas Business
-Organizations Code. Federal 501(c)(3) determination is **pending** — until the IRS issues
-the determination letter and EIN, the footer reads "Texas nonprofit corporation. Federal
-501(c)(3) status pending." rather than claiming 501(c)(3) status outright.
+Organizations Code. **EIN issued** but the federal 501(c)(3) determination letter (IRS
+Letter 947) has NOT been received yet. Until it is:
+- `site.taxExempt501c3` stays `false`
+- The footer reads "Texas nonprofit corporation, EIN 41-4375241. Federal 501(c)(3) status
+  pending." — accurate while Form 1023 is in flight
+- When Letter 947 arrives, flip `site.taxExempt501c3` to `true`; the footer auto-switches
+  to "A 501(c)(3) nonprofit — EIN 41-4375241."
 ### Voice & tone
 The mission is explicitly faith-based, centered on hope, family, and service. When writing
 copy:
@@ -116,8 +121,8 @@ Before finishing a change: run `npm run check`. Keep diffs small and localized �
 concern per commit, with a clear message.
 ---
 ## Open items (need owner input — do not invent)
-- [ ] **Federal EIN** from IRS 501(c)(3) determination letter (footer + JSON-LD switch
-      to "501(c)(3) nonprofit — EIN XXX" once supplied)
+- [ ] **IRS Letter 947** (501(c)(3) determination letter) — when received, flip
+      `site.taxExempt501c3` to `true`. EIN itself is already in config.
 - [ ] **Public contact email** (and phone, if desired)
 - [ ] **Donation platform account + URL** (Every.org recommended for fee-free 501(c)(3))
 - [ ] **Program descriptions** — concrete services for women, children, veterans
