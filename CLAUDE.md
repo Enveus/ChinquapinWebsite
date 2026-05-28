@@ -42,22 +42,30 @@ copy:
   TODO and ask — never fabricate.
 ---
 ## Brand
-Colors extracted from the official logo (a tree, river, hills, and wildflowers in a circle).
+Colors **sampled directly from the official logo SVG** (`public/logo.svg`).
 These are the source of truth; they live in `src/styles/global.css` as design tokens.
-| Token | Hex | Use |
+| Token | Hex | Where it appears in the logo / UI |
 |-------|-----|-----|
-| Deep forest green (primary) | `#24540C` | Headings, primary buttons, logo text |
-| Deepest green | `#243C0C` | Footer, high-contrast text |
-| Foliage green (accent) | `#3C8424` | Accents, hover states, links |
-| Sage | `#6C8454` | Muted text, borders, secondary UI |
-| Water blue | `#84CCCC` | Soft accents, section backgrounds |
-| Sunflower yellow | `#FCCC0C` | Sparingly — calls to attention, highlights |
+| Primary | `#3E4D28` | Wordmark + hill shadow; headings, primary CTAs |
+| Primary deep | `#425031` | Tree trunk + branches; footer, high-contrast text |
+| Accent | `#58754B` | Foliage / hills; accents, hover states, links |
+| Sage | `#6C8454` | UI-only (not in logo) — muted text, borders |
+| Water | `#84ACBD` | River; soft accents, section backgrounds |
+| Sunflower | `#FAC81C` | Wildflowers; sparing highlights only |
+| Cream | `#F3F4C1` | Logo accent (subtle); rarely used in UI |
 | Paper | `#FAFAF7` | Page background |
 Yellow is an accent only — small doses (a donate highlight, an underline), never large fills.
-The overall feel is natural, calm, grounded: greens dominate, blue and yellow punctuate.
-**Logo files** live in the project's source assets (PNG, JPG, PDF, plus a black variant).
-Use the full-color version on light backgrounds. Generate the favicon and social-share
-image from the logo mark (the circular tree/river emblem) without the wordmark.
+The overall feel is natural, calm, grounded: muted olive greens dominate, blue and yellow
+punctuate.
+
+**Logo files** live in `public/`:
+- `public/logo.svg` — full vertical logo (mark + wordmark), 360×360 viewBox
+- `public/logo-mark.svg` — circular mark only, viewBox cropped to 360×280
+- `public/favicon.svg` — same as logo-mark, used by browsers in the tab
+- `public/logo.png`, `public/logo-black.png` — raster fallbacks
+
+The header uses `logo-mark.svg` next to a CSS-styled wordmark for a horizontal layout
+(the supplied logo is stacked vertically, which is too tall for a header row).
 **Typography direction:** the wordmark uses a refined serif for "CHINQUAPIN RIDGE" and a
 spaced sans for "PHILANTHROPIC." Match that pairing: a distinctive serif for display/headings,
 a clean sans for body. Decide specific webfonts at implementation time; avoid generic defaults
@@ -129,8 +137,6 @@ concern per commit, with a clear message.
 - [ ] **About / origin story** copy
 - [ ] **Board member titles + bios/photos** (currently legal names only)
 - [ ] **Social media handles** (if any are active)
-- [ ] **Logo files** (replace placeholder favicon and add wordmark to header)
-
 **Known but NOT public-facing** (do not put on the website):
 - Texas taxpayer number 32104453967 — donors need the *federal* EIN, not this
 - Webfile number FQ457009 — Comptroller credential

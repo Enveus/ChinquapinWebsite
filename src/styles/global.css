@@ -10,15 +10,18 @@
 @import 'tailwindcss';
 
 @theme {
-  /* Brand palette — extracted from the official logo. */
-  --color-primary: #24540c;        /* Deep forest green — headings, primary CTAs */
-  --color-primary-deep: #243c0c;   /* Deepest green — footer, high-contrast text */
-  --color-accent: #3c8424;         /* Foliage — accents, hover, links */
-  --color-sage: #6c8454;           /* Sage — muted text, borders, secondary UI */
-  --color-water: #84cccc;          /* Water blue — soft accents, section bgs */
-  --color-sunflower: #fccc0c;      /* Sunflower yellow — sparing highlights only */
+  /* Brand palette — sampled from the official logo SVG (public/logo.svg).
+     The earlier hex values were visual estimates; these are the actual
+     fills used in the logo's vector source. */
+  --color-primary: #3e4d28;        /* Wordmark + hill shadow — headings, primary CTAs */
+  --color-primary-deep: #425031;   /* Tree trunk + branches — footer, high-contrast text */
+  --color-accent: #58754b;         /* Foliage / hills — accents, hover, links */
+  --color-sage: #6c8454;           /* Sage (UI-only, not in logo) — muted text, borders */
+  --color-water: #84acbd;          /* River blue — soft accents, section bgs */
+  --color-sunflower: #fac81c;      /* Wildflower yellow — sparing highlights only */
+  --color-cream: #f3f4c1;          /* Logo cream accent — rarely used */
   --color-paper: #fafaf7;          /* Paper — page background */
-  --color-ink: #1a2410;            /* Body copy ink (derived from primary-deep) */
+  --color-ink: #2a3320;            /* Body copy ink (derived from primary-deep) */
 
   /* Type pairing — refined serif for display, clean sans for body. */
   --font-serif: 'Cormorant Garamond', 'EB Garamond', Georgia, 'Times New Roman', serif;
