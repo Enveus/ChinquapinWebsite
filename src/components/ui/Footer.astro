@@ -20,27 +20,29 @@ const year = new Date().getFullYear();
 const address = site.address;
 ---
 
-<footer class="relative overflow-hidden bg-primary-deep text-paper">
-  {/* Backdrop: silhouette artwork — object-position pulls the trees into
-      the middle/upper band of the footer so they're visible behind the
-      text, not just the dark ground line at the bottom. */}
+<footer class="relative overflow-hidden bg-primary-deep text-paper min-h-[300px] flex flex-col">
+  {/* Backdrop: silhouette artwork — object-position shows the trees mid-band
+      and the dark ground at the bottom, giving the footer real visual depth. */}
   <Image
     src={silhouette}
     alt=""
     widths={[640, 960, 1280, 1600, 2000]}
     sizes="(min-width: 1024px) calc(100vw - 280px), 100vw"
-    class="absolute inset-0 h-full w-full object-cover object-[center_75%]"
+    class="absolute inset-0 h-full w-full object-cover object-[center_85%]"
     loading="lazy"
   />
 
-  {/* Soft dark tint over the artwork — light enough that the silhouettes
-      stay visible, dark enough that text reads against the lighter olive
-      sky portion of the artwork. */}
-  <div class="absolute inset-0 bg-primary-deep/40" aria-hidden="true"></div>
+  {/* Gradient tint — darker at the top (where the address/contact text
+      sits) so it reads against the lighter olive sky portion of the
+      artwork; lighter at the bottom so the tree silhouettes stay vivid. */}
+  <div
+    class="absolute inset-0 bg-gradient-to-b from-primary-deep/75 via-primary-deep/30 to-primary-deep/15"
+    aria-hidden="true"
+  ></div>
 
   {/* Content sits on top of the backdrop */}
-  <div class="relative">
-    <div class="mx-auto max-w-6xl px-6 sm:px-10 lg:px-14 py-8 grid gap-6 sm:grid-cols-2">
+  <div class="relative flex-1 flex flex-col">
+    <div class="mx-auto w-full max-w-6xl px-6 sm:px-10 lg:px-14 py-8 grid gap-6 sm:grid-cols-2 flex-1">
       <div>
         <p class="font-serif text-2xl text-paper">{site.name}</p>
         <p class="mt-3 max-w-prose text-sm text-cream">{site.tagline}</p>
