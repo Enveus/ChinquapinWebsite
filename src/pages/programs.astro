@@ -1,0 +1,60 @@
+---
+/**
+ * Programs / "What we do" page — stub.
+ * TODO(owner): describe actual programs and services for each audience.
+ */
+
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Hero from '@components/sections/Hero.astro';
+
+interface AudienceProgram {
+  id: string;
+  title: string;
+  intro: string;
+}
+
+const audiences: readonly AudienceProgram[] = [
+  {
+    id: 'women',
+    title: 'Programs for women',
+    intro:
+      'Practical resources, mentorship, and faith-rooted community for women navigating hard seasons.',
+  },
+  {
+    id: 'children',
+    title: 'Programs for children',
+    intro:
+      'Educational support and family-strengthening efforts that give children a stable foundation.',
+  },
+  {
+    id: 'veterans',
+    title: 'Programs for veterans',
+    intro:
+      'Connection, resources, and dignified support for those who have served and for their families.',
+  },
+];
+---
+
+<BaseLayout title="What we do" description="The programs and services Chinquapin Ridge Philanthropic offers across East Texas.">
+  <Hero overlayKicker="What we do" overlayHeadline="Programs and services" />
+
+  <article class="mx-auto max-w-4xl px-6 sm:px-10 lg:px-14 py-16 sm:py-20 lg:py-24 space-y-16">
+    <p class="font-serif text-2xl text-primary leading-snug">
+      We serve women, children, and veterans across East Texas. Specific program
+      descriptions will appear below as services launch.
+    </p>
+
+    {
+      audiences.map((audience) => (
+        <section id={audience.id} class="scroll-mt-24">
+          <h2 class="font-serif text-3xl text-primary">{audience.title}</h2>
+          <p class="mt-4 text-primary-deep/80">{audience.intro}</p>
+          <p class="mt-4 text-sm text-sage italic">
+            {/* TODO(owner): describe actual services for this audience. */}
+            Program details coming soon.
+          </p>
+        </section>
+      ))
+    }
+  </article>
+</BaseLayout>

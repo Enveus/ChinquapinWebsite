@@ -1,0 +1,108 @@
+---
+/**
+ * Primary site sidebar.
+ *
+ * On desktop (lg+) this is a sticky, full-height column with the stacked
+ * logo, vertical nav list, and the Donate CTA pinned to the bottom.
+ *
+ * On mobile it collapses into a compact top bar with a hamburger toggle
+ * that opens the same nav list as a drop-down panel. The toggle is wired
+ * via a tiny `<script>` at the bottom of this file so the nav works
+ * without JavaScript frameworks.
+ */
+
+import { site } from '@config/site';
+import { primaryNav } from '@config/nav';
+import DonateButton from '@components/ui/DonateButton.astro';
+
+const currentPath = Astro.url.pathname;
+
+function isCurrent(href: string): boolean {
+  if (href === '/') return currentPath === '/';
+  return currentPath === href || currentPath.startsWith(`${href}/`);
+}
+---
+
+<aside
+  class="bg-paper border-b lg:border-b-0 lg:border-r border-sage/30 lg:sticky lg:top-0 lg:h-screen lg:flex lg:flex-col"
+  aria-label="Primary"
+>
+  {/* Mobile top bar: compact logo + hamburger */}
+  <div class="flex items-center justify-between px-4 py-3 lg:hidden">
+    <a href="/" class="flex items-center gap-2 text-primary no-underline" aria-label={`${site.name} — home`}>
+      <img src="/logo-mark.svg" alt="" width="36" height="28" class="h-8 w-auto" />
+      <span class="font-serif text-lg leading-tight">Chinquapin Ridge</span>
+    </a>
+    <button
+      type="button"
+      id="nav-toggle"
+      aria-controls="primary-nav"
+      aria-expanded="false"
+      class="inline-flex items-center justify-center rounded-md p-2 text-primary hover:bg-sage/10"
+    >
+      <span class="sr-only">Open navigation</span>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <line x1="4" y1="7" x2="20" y2="7" />
+        <line x1="4" y1="12" x2="20" y2="12" />
+        <line x1="4" y1="17" x2="20" y2="17" />
+      </svg>
+    </button>
+  </div>
+
+  {/* Desktop logo block: full vertical logo, centered */}
+  <a
+    href="/"
+    class="hidden lg:flex flex-col items-center gap-3 px-6 pt-10 pb-8 no-underline"
+    aria-label={`${site.name} — home`}
+  >
+    <img src="/logo-mark.svg" alt="" width="120" height="93" class="h-24 w-auto" />
+    <span class="text-center">
+      <span class="block font-serif text-2xl leading-tight text-primary">Chinquapin Ridge</span>
+      <span class="block mt-1 text-[10px] tracking-[0.3em] text-sage">PHILANTHROPIC</span>
+    </span>
+  </a>
+
+  {/* Nav list — visible on desktop always; toggled on mobile */}
+  <nav
+    id="primary-nav"
+    class="hidden lg:block lg:flex-1 px-4 pb-6"
+    aria-label="Primary navigation"
+  >
+    <ul class="flex flex-col gap-1 lg:gap-2">
+      {
+        primaryNav.map((item) => {
+          const active = isCurrent(item.href);
+          const itemClasses = [
+            'block rounded-md px-4 py-2 text-center no-underline transition-colors',
+            active
+              ? 'bg-sage/20 text-primary font-semibold'
+              : 'text-primary-deep hover:bg-sage/10 hover:text-primary',
+          ].join(' ');
+          return (
+            <li>
+              <a href={item.href} class={itemClasses} aria-current={active ? 'page' : undefined}>
+                {item.label}
+              </a>
+            </li>
+          );
+        })
+      }
+    </ul>
+
+    {/* Donate CTA sits at the bottom of the sidebar on desktop */}
+    <div class="mt-6 lg:mt-auto lg:pt-10 flex justify-center">
+      <DonateButton />
+    </div>
+  </nav>
+</aside>
+
+<script>
+  const toggle = document.getElementById('nav-toggle');
+  const nav = document.getElementById('primary-nav');
+  if (toggle && nav) {
+    toggle.addEventListener('click', () => {
+      const isNowHidden = nav.classList.toggle('hidden');
+      toggle.setAttribute('aria-expanded', String(!isNowHidden));
+    });
+  }
+</script>

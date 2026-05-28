@@ -2,30 +2,87 @@
 /**
  * Home page.
  *
- * Placeholder hero so the deploy pipeline can be verified end-to-end.
- * Content will be expanded once the owner supplies program details and
- * the donation platform URL — until then this serves as a holding page
- * that introduces the foundation without inventing facts.
+ * Hero illustration → dark welcome panel with mission + CTAs → an
+ * "audiences we serve" row that primes the visitor for the eventual
+ * Programs page. Copy is anchored in the cert's stated purposes
+ * (vulnerable populations in East Texas: women, children, veterans);
+ * specifics are TODO until the owner supplies program details.
  */
 
 import BaseLayout from '@layouts/BaseLayout.astro';
-import DonateButton from '@components/ui/DonateButton.astro';
+import Hero from '@components/sections/Hero.astro';
+import WelcomeSection from '@components/sections/WelcomeSection.astro';
 import { site } from '@config/site';
+
+interface Audience {
+  title: string;
+  blurb: string;
+  href: string;
+}
+
+const audiences: readonly Audience[] = [
+  {
+    title: 'Women',
+    blurb:
+      'Programs that meet women where they are — with practical resources, mentorship, and a community grounded in hope. Specific services coming soon.',
+    href: '/programs#women',
+  },
+  {
+    title: 'Children',
+    blurb:
+      'Educational and family-support efforts focused on strengthening homes and giving children a stable foundation to grow. Specific services coming soon.',
+    href: '/programs#children',
+  },
+  {
+    title: 'Veterans',
+    blurb:
+      'Connection, resources, and dignified support for those who have served and their families across East Texas. Specific services coming soon.',
+    href: '/programs#veterans',
+  },
+] as const;
 ---
 
-<BaseLayout>
-  <section class="mx-auto max-w-3xl px-4 py-16 sm:py-24 text-center">
-    <p class="text-sm tracking-[0.25em] text-sage uppercase">Rooted in faith</p>
-    <h1 class="mt-4 font-serif text-4xl sm:text-5xl text-primary">
-      {site.tagline}
-    </h1>
-    <p class="mt-6 mx-auto max-w-prose text-lg text-primary-deep">
-      {site.mission}
-    </p>
+<BaseLayout description={site.tagline}>
+  <Hero />
 
-    <div class="mt-10 flex flex-wrap items-center justify-center gap-4">
-      <DonateButton />
-      <a href="/about" class="text-primary font-semibold">Learn more &rarr;</a>
+  <WelcomeSection kicker="Welcome to" heading={site.name}>
+    <p>{site.mission}</p>
+    <p class="text-paper/80">
+      We're a Texas nonprofit corporation rooted in East Texas. Our work serves
+      women, children, and veterans through partnerships with churches, Christian
+      ministries, and community groups.
+    </p>
+  </WelcomeSection>
+
+  <section class="bg-paper">
+    <div class="mx-auto max-w-6xl px-6 sm:px-10 lg:px-14 py-16 sm:py-20 lg:py-24">
+      <p class="text-xs tracking-[0.3em] uppercase text-sage text-center">Who we serve</p>
+      <h2 class="mt-3 font-serif text-3xl sm:text-4xl text-primary text-center">
+        Three audiences. One mission.
+      </h2>
+      <p class="mt-4 mx-auto max-w-2xl text-center text-primary-deep/80">
+        Every program we build is shaped by the people it serves. Here's who's at the
+        center of our work.
+      </p>
+
+      <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {
+          audiences.map((audience) => (
+            <a
+              href={audience.href}
+              class="group block rounded-xl border border-sage/30 bg-paper p-6 no-underline transition-shadow hover:shadow-lg hover:border-accent/50"
+            >
+              <h3 class="font-serif text-2xl text-primary group-hover:text-accent transition-colors">
+                {audience.title}
+              </h3>
+              <p class="mt-3 text-primary-deep/80 text-sm leading-relaxed">
+                {audience.blurb}
+              </p>
+              <p class="mt-4 text-accent text-sm font-semibold">Learn more &rarr;</p>
+            </a>
+          ))
+        }
+      </div>
     </div>
   </section>
 </BaseLayout>

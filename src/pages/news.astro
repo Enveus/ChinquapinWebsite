@@ -1,0 +1,23 @@
+---
+/**
+ * News page — stub.
+ * TODO(owner): wire to the `news` content collection once posts exist.
+ */
+
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Hero from '@components/sections/Hero.astro';
+---
+
+<BaseLayout title="News" description="Updates and announcements from Chinquapin Ridge Philanthropic.">
+  <Hero overlayKicker="News" overlayHeadline="Updates from our work" />
+
+  <article class="mx-auto max-w-3xl px-6 sm:px-10 lg:px-14 py-16 sm:py-20 lg:py-24">
+    <p class="font-serif text-2xl text-primary leading-snug">
+      Stories, milestones, and updates as our work unfolds across East Texas.
+    </p>
+    <p class="mt-6 text-primary-deep/80">
+      {/* TODO(owner): publish first news post. Until then this page sits empty. */}
+      No posts yet. Check back soon, or follow us once social channels are live.
+    </p>
+  </article>
+</BaseLayout>

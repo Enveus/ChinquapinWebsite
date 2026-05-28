@@ -1,0 +1,67 @@
+---
+/**
+ * Contact page — stub.
+ * Renders the address from site config; shows email/phone only when present.
+ * TODO(owner): provide a public contact email (and phone if desired).
+ */
+
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Hero from '@components/sections/Hero.astro';
+import { site } from '@config/site';
+
+const address = site.address;
+---
+
+<BaseLayout title="Contact" description={`Get in touch with ${site.name}.`}>
+  <Hero overlayKicker="Contact" overlayHeadline="Get in touch" />
+
+  <article class="mx-auto max-w-2xl px-6 sm:px-10 lg:px-14 py-16 sm:py-20 lg:py-24">
+    <p class="font-serif text-2xl text-primary leading-snug">
+      We'd love to hear from you — whether you want to support our work, partner with
+      us, or learn more about what we do.
+    </p>
+
+    <dl class="mt-10 space-y-6 text-primary-deep">
+      {
+        address && (
+          <div>
+            <dt class="text-xs tracking-[0.3em] uppercase text-sage">Mailing address</dt>
+            <dd class="mt-2">
+              {address.street}
+              <br />
+              {address.city}, {address.region} {address.postalCode}
+            </dd>
+          </div>
+        )
+      }
+      {
+        site.contact.email && (
+          <div>
+            <dt class="text-xs tracking-[0.3em] uppercase text-sage">Email</dt>
+            <dd class="mt-2">
+              <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a>
+            </dd>
+          </div>
+        )
+      }
+      {
+        site.contact.phone && (
+          <div>
+            <dt class="text-xs tracking-[0.3em] uppercase text-sage">Phone</dt>
+            <dd class="mt-2">
+              <a href={`tel:${site.contact.phone}`}>{site.contact.phone}</a>
+            </dd>
+          </div>
+        )
+      }
+    </dl>
+
+    {
+      !site.contact.email && !site.contact.phone && (
+        <p class="mt-8 text-sm text-sage italic">
+          A public contact email is coming soon. Until then, please use the mailing address above.
+        </p>
+      )
+    }
+  </article>
+</BaseLayout>

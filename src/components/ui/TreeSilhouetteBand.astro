@@ -1,0 +1,59 @@
+---
+/**
+ * Decorative band of stylized chinquapin tree silhouettes — used as a
+ * graphic break at the bottom of dark-background panels. Echoes the
+ * tree shape in the logo without copying it directly.
+ *
+ * Renders as an inline SVG that fills its container's width. The default
+ * fill is the deepest brand green so it reads as a darker silhouette
+ * against the surrounding panel.
+ */
+
+interface Props {
+  /** SVG fill color. Use a token like `currentColor` or a hex. */
+  fill?: string;
+  /** Extra Tailwind classes for the wrapper. */
+  class?: string;
+}
+
+const { fill = '#243319', class: className = '' } = Astro.props;
+---
+
+<div class={`pointer-events-none ${className}`} aria-hidden="true">
+  <svg
+    viewBox="0 0 1600 120"
+    preserveAspectRatio="none"
+    xmlns="http://www.w3.org/2000/svg"
+    class="block w-full h-16 sm:h-20 lg:h-24"
+  >
+    <g fill={fill}>
+      {/* Ground band */}
+      <rect x="0" y="100" width="1600" height="20" />
+      {/* Tree silhouettes — varied sizes */}
+      <ellipse cx="80" cy="70" rx="50" ry="55" />
+      <rect x="76" y="70" width="8" height="40" />
+      <ellipse cx="220" cy="58" rx="42" ry="48" />
+      <rect x="217" y="58" width="6" height="50" />
+      <ellipse cx="340" cy="78" rx="38" ry="40" />
+      <rect x="337" y="78" width="6" height="32" />
+      <ellipse cx="460" cy="64" rx="55" ry="58" />
+      <rect x="456" y="64" width="8" height="44" />
+      <ellipse cx="600" cy="76" rx="42" ry="44" />
+      <rect x="597" y="76" width="6" height="34" />
+      <ellipse cx="730" cy="60" rx="50" ry="52" />
+      <rect x="726" y="60" width="8" height="50" />
+      <ellipse cx="860" cy="74" rx="40" ry="42" />
+      <rect x="857" y="74" width="6" height="34" />
+      <ellipse cx="980" cy="58" rx="46" ry="50" />
+      <rect x="977" y="58" width="6" height="50" />
+      <ellipse cx="1110" cy="78" rx="38" ry="40" />
+      <rect x="1107" y="78" width="6" height="32" />
+      <ellipse cx="1230" cy="62" rx="52" ry="54" />
+      <rect x="1226" y="62" width="8" height="46" />
+      <ellipse cx="1370" cy="74" rx="42" ry="44" />
+      <rect x="1367" y="74" width="6" height="36" />
+      <ellipse cx="1500" cy="60" rx="48" ry="52" />
+      <rect x="1496" y="60" width="8" height="48" />
+    </g>
+  </svg>
+</div>

@@ -1,0 +1,42 @@
+---
+/**
+ * About page — stub.
+ * TODO(owner): provide origin story copy, board bios + photos.
+ */
+
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Hero from '@components/sections/Hero.astro';
+import { site } from '@config/site';
+---
+
+<BaseLayout title="About" description={`Learn about ${site.name}.`}>
+  <Hero overlayKicker="About us" overlayHeadline={site.name} />
+
+  <article class="mx-auto max-w-3xl px-6 sm:px-10 lg:px-14 py-16 sm:py-20 lg:py-24 prose-content">
+    <p class="font-serif text-2xl text-primary leading-snug">{site.mission}</p>
+
+    <h2 class="mt-12 font-serif text-3xl text-primary">Our story</h2>
+    <p class="mt-4 text-primary-deep/80">
+      {/* TODO(owner): origin story — when, why, who. A few paragraphs is plenty. */}
+      Founded in 2026 in Lufkin, Texas, Chinquapin Ridge Philanthropic was established
+      to serve vulnerable populations across East Texas. A fuller story will appear
+      here once the foundation team has had time to put it into words.
+    </p>
+
+    <h2 class="mt-12 font-serif text-3xl text-primary">Board of directors</h2>
+    <ul class="mt-4 space-y-3 text-primary-deep/80">
+      {
+        site.board.map((member) => (
+          <li>
+            <span class="font-semibold text-primary">{member.name}</span>
+            {member.title && <span> — {member.title}</span>}
+          </li>
+        ))
+      }
+    </ul>
+    <p class="mt-4 text-sm text-sage italic">
+      {/* TODO(owner): board member titles, short bios, and headshots. */}
+      Bios and headshots coming soon.
+    </p>
+  </article>
+</BaseLayout>

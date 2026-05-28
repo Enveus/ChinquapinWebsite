@@ -1,0 +1,50 @@
+---
+/**
+ * Home hero — the large illustrated/photographic banner at the top of the page.
+ *
+ * Currently renders the inline SVG `HeroIllustration` as a placeholder. To
+ * swap in a real photograph later: drop `public/hero.jpg` (and ideally a
+ * WebP variant) into the project, then replace the <HeroIllustration /> call
+ * below with a <picture> element. Keep the same wrapper aspect ratio so the
+ * page layout doesn't reflow.
+ *
+ * The optional `overlayKicker` and `overlayHeadline` render as a subtle
+ * caption at the bottom-left of the hero — handy on inner pages.
+ */
+
+import HeroIllustration from '@components/ui/HeroIllustration.astro';
+
+interface Props {
+  overlayKicker?: string;
+  overlayHeadline?: string;
+}
+
+const { overlayKicker, overlayHeadline } = Astro.props;
+const hasOverlay = Boolean(overlayKicker || overlayHeadline);
+---
+
+<section
+  class="relative w-full overflow-hidden aspect-[16/9] sm:aspect-[2/1] lg:aspect-[20/9]"
+  aria-label="Hero"
+>
+  <HeroIllustration />
+
+  {
+    hasOverlay && (
+      <div class="absolute inset-x-0 bottom-0 p-6 sm:p-10 lg:p-14">
+        <div class="max-w-2xl">
+          {overlayKicker && (
+            <p class="text-xs sm:text-sm tracking-[0.3em] uppercase text-paper/90 drop-shadow">
+              {overlayKicker}
+            </p>
+          )}
+          {overlayHeadline && (
+            <h1 class="mt-2 font-serif text-3xl sm:text-4xl lg:text-5xl text-paper drop-shadow-md leading-tight">
+              {overlayHeadline}
+            </h1>
+          )}
+        </div>
+      </div>
+    )
+  }
+</section>

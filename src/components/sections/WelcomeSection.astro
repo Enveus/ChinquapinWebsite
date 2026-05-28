@@ -1,0 +1,60 @@
+---
+/**
+ * Welcome section — the dark green panel that sits directly below the hero
+ * on the home page. Two-column on desktop (heading left, paragraph right),
+ * stacked on mobile. The decorative tree silhouette band caps the bottom.
+ *
+ * The body paragraph is intentionally short and slot-driven so the same
+ * component can be reused on inner pages with different copy.
+ */
+
+import DonateButton from '@components/ui/DonateButton.astro';
+import TreeSilhouetteBand from '@components/ui/TreeSilhouetteBand.astro';
+
+interface Props {
+  kicker?: string;
+  heading: string;
+  /** Secondary CTA label & href. Defaults to "Learn more" → /about. */
+  secondaryLabel?: string;
+  secondaryHref?: string;
+}
+
+const {
+  kicker,
+  heading,
+  secondaryLabel = 'Learn more',
+  secondaryHref = '/about',
+} = Astro.props;
+---
+
+<section class="relative bg-primary-deep text-paper">
+  <div class="mx-auto max-w-6xl px-6 sm:px-10 lg:px-14 pt-12 sm:pt-16 lg:pt-20 pb-24 sm:pb-28 lg:pb-32">
+    <div class="grid gap-8 lg:grid-cols-2 lg:gap-16">
+      <div>
+        {kicker && (
+          <p class="text-xs tracking-[0.3em] uppercase text-water">{kicker}</p>
+        )}
+        <h2 class="mt-3 font-serif text-3xl sm:text-4xl lg:text-5xl leading-tight text-paper">
+          {heading}
+        </h2>
+      </div>
+
+      <div class="text-paper/90 space-y-5 text-base sm:text-lg leading-relaxed">
+        <slot />
+
+        <div class="flex flex-wrap items-center gap-4 pt-2">
+          <a
+            href={secondaryHref}
+            class="inline-flex items-center justify-center rounded-md border border-paper/70 px-5 py-2.5 font-semibold text-paper no-underline hover:bg-paper hover:text-primary-deep transition-colors"
+          >
+            {secondaryLabel}
+          </a>
+          <DonateButton />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {/* Decorative chinquapin silhouette band, anchored at the bottom edge */}
+  <TreeSilhouetteBand class="absolute inset-x-0 bottom-0" />
+</section>
