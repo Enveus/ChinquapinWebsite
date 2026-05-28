@@ -13,6 +13,11 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "chinquapin-website",
   "compatibility_date": "2025-05-01",
+  // workers_dev keeps the *.workers.dev URL alive as a staging mirror, useful
+  // while the custom domain is propagating. preview_urls turns on per-PR
+  // preview links so non-main branches get their own URL automatically.
+  "workers_dev": true,
+  "preview_urls": true,
   "assets": {
     "directory": "./dist",
     "not_found_handling": "404-page"
