@@ -21,20 +21,22 @@ const address = site.address;
 ---
 
 <footer class="relative overflow-hidden bg-primary-deep text-paper">
-  {/* Backdrop: silhouette artwork pinned to the bottom so trees + ground
-      line up with the bottom edge of the viewport. */}
+  {/* Backdrop: silhouette artwork — object-position pulls the trees into
+      the middle/upper band of the footer so they're visible behind the
+      text, not just the dark ground line at the bottom. */}
   <Image
     src={silhouette}
     alt=""
     widths={[640, 960, 1280, 1600, 2000]}
     sizes="(min-width: 1024px) calc(100vw - 280px), 100vw"
-    class="absolute inset-0 h-full w-full object-cover object-bottom"
+    class="absolute inset-0 h-full w-full object-cover object-[center_75%]"
     loading="lazy"
   />
 
-  {/* Dark tint over the artwork — keeps text readable while letting the
-      silhouettes show through clearly. */}
-  <div class="absolute inset-0 bg-primary-deep/65" aria-hidden="true"></div>
+  {/* Soft dark tint over the artwork — light enough that the silhouettes
+      stay visible, dark enough that text reads against the lighter olive
+      sky portion of the artwork. */}
+  <div class="absolute inset-0 bg-primary-deep/40" aria-hidden="true"></div>
 
   {/* Content sits on top of the backdrop */}
   <div class="relative">
