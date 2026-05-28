@@ -24,10 +24,10 @@ export const site = {
 
   /** Used verbatim wherever the mission is quoted. */
   mission:
-    'Rooted in faith, our mission is to serve women, children, and veterans by offering hope, resources, and opportunities that strengthen families and reflect God’s purpose.',
+    'Rooted in faith, our mission is to serve women, children, and veterans in East Texas by offering hope, resources, and opportunities that strengthen families and reflect God’s purpose.',
 
   /** Short tagline for hero / OG description. */
-  tagline: 'Hope, resources, and opportunity for women, children, and veterans.',
+  tagline: 'Hope, resources, and opportunity for women, children, and veterans across East Texas.',
 
   /** Populations served — keep in sync with mission. */
   servesAudiences: ['women', 'children', 'veterans'] as const,
@@ -40,9 +40,17 @@ export const site = {
 
   /**
    * Mailing/physical address used in footer, contact page, and JSON-LD.
-   * TODO(owner): provide address. Most donation processors require it.
+   * Matches the principal office on the Texas Certificate of Formation
+   * (filed 2026-02-12) and the address on the Texas Comptroller's
+   * Franchise Tax notice (2026-02-27).
    */
-  address: null as {
+  address: {
+    street: '6004 South First Street',
+    city: 'Lufkin',
+    region: 'TX',
+    postalCode: '75901-8558',
+    country: 'US',
+  } as {
     street: string;
     city: string;
     region: string;
@@ -70,13 +78,14 @@ export const site = {
   },
 
   /**
-   * Board of directors. Names only until titles/bios are supplied.
+   * Board of directors. Names match the initial Board on the Texas
+   * Certificate of Formation (filed 2026-02-12).
    * TODO(owner): confirm titles, provide bios + headshots.
    */
   board: [
     { name: 'Eric Estes', title: null as string | null },
-    { name: 'Conni Estes', title: null as string | null },
-    { name: 'Audriana Estes', title: null as string | null },
+    { name: 'Cornelia Estes', title: null as string | null },
+    { name: 'Adriana Estes', title: null as string | null },
   ],
 
   /**

@@ -9,16 +9,21 @@ Live domain: **chinquapin.foundation** (registered on Porkbun).
 ---
 ## The foundation
 **Legal/display name:** Chinquapin Ridge Philanthropic
+**Texas SOS file number:** 806451384 (filed 2026-02-12 as a Domestic Nonprofit Corporation)
+**Principal & mailing address:** 6004 South First Street, Lufkin, TX 75901-8558
 **Mission statement (use verbatim where a mission is quoted):**
-> "Rooted in faith, our mission is to serve women, children, and veterans by offering hope,
-> resources, and opportunities that strengthen families and reflect God's purpose."
-**Who we serve:** women, children, and veterans.
-**Board members:**
+> "Rooted in faith, our mission is to serve women, children, and veterans in East Texas by
+> offering hope, resources, and opportunities that strengthen families and reflect God's
+> purpose."
+**Who we serve:** women, children, and veterans in **East Texas**.
+**Board members (per Certificate of Formation, Art. 6):**
 - Eric Estes
-- Conni Estes
-- Audriana Estes
-**Status:** 501(c)(3) nonprofit that accepts donations. (See "Open items" — EIN and exact
-legal registration details still need to be supplied by the owner before launch.)
+- Cornelia Estes
+- Adriana Estes
+**Status:** Texas nonprofit corporation organized under Chapter 22 of the Texas Business
+Organizations Code. Federal 501(c)(3) determination is **pending** — until the IRS issues
+the determination letter and EIN, the footer reads "Texas nonprofit corporation. Federal
+501(c)(3) status pending." rather than claiming 501(c)(3) status outright.
 ### Voice & tone
 The mission is explicitly faith-based, centered on hope, family, and service. When writing
 copy:
@@ -111,16 +116,23 @@ Before finishing a change: run `npm run check`. Keep diffs small and localized �
 concern per commit, with a clear message.
 ---
 ## Open items (need owner input — do not invent)
-- [ ] **EIN** and exact legal registration name (for footer disclosure + Schema.org JSON-LD)
-- [ ] **Mailing/physical address** (required by most donation processors + JSON-LD)
+- [ ] **Federal EIN** from IRS 501(c)(3) determination letter (footer + JSON-LD switch
+      to "501(c)(3) nonprofit — EIN XXX" once supplied)
 - [ ] **Public contact email** (and phone, if desired)
 - [ ] **Donation platform account + URL** (Every.org recommended for fee-free 501(c)(3))
 - [ ] **Program descriptions** — concrete services for women, children, veterans
 - [ ] **About / origin story** copy
-- [ ] **Board member titles + bios/photos** (currently names only)
+- [ ] **Board member titles + bios/photos** (currently legal names only)
 - [ ] **Social media handles** (if any are active)
-When any of these are missing, leave a visible `TODO` and ask the owner — never fill the
-gap with placeholder facts that could read as real.
+- [ ] **Logo files** (replace placeholder favicon and add wordmark to header)
+
+**Known but NOT public-facing** (do not put on the website):
+- Texas taxpayer number 32104453967 — donors need the *federal* EIN, not this
+- Webfile number FQ457009 — Comptroller credential
+- Registered agent (Steve Bradley) and organizer (Ryan Peak) — legal-filing roles
+
+When public-facing items are missing, leave a visible `TODO` and ask the owner — never
+fill the gap with placeholder facts that could read as real.
 ---
 ## Guardrails — never do these
 - Never fabricate stats, impact numbers, testimonials, program details, or partners.

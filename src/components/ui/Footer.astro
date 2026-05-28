@@ -34,7 +34,11 @@ const address = site.address;
       {site.contact.phone && <p><a class="text-water" href={`tel:${site.contact.phone}`}>{site.contact.phone}</a></p>}
       <p>
         &copy; {year} {site.legalName}.
-        {site.ein ? ` A 501(c)(3) nonprofit — EIN ${site.ein}.` : ' 501(c)(3) nonprofit.'}
+        {
+          site.ein
+            ? ` A 501(c)(3) nonprofit — EIN ${site.ein}.`
+            : ' Texas nonprofit corporation. Federal 501(c)(3) status pending.'
+        }
       </p>
     </div>
   </div>
