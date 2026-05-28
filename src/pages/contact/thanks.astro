@@ -1,0 +1,47 @@
+---
+/**
+ * Contact form confirmation page.
+ *
+ * Web3Forms redirects visitors here after a successful submission (see the
+ * `redirect` hidden input in /contact). Direct visits are rare but harmless —
+ * the page reads as a stand-alone thank-you either way.
+ *
+ * `noindex` keeps it out of search results; there's no value in indexing a
+ * post-submit confirmation screen.
+ */
+
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Hero from '@components/sections/Hero.astro';
+import { site } from '@config/site';
+---
+
+<BaseLayout title="Thank you" description={`Your message has been sent to ${site.name}.`}>
+  <Fragment slot="headExtras">
+    <meta name="robots" content="noindex, follow" />
+  </Fragment>
+
+  <Hero overlayKicker="Thank you" overlayHeadline="Your message is on its way" />
+
+  <article class="mx-auto max-w-2xl px-6 sm:px-10 lg:px-14 py-16 sm:py-20 lg:py-24">
+    <p class="font-serif text-2xl text-primary leading-snug">
+      Thank you for reaching out. We've received your message and will be in touch soon.
+    </p>
+
+    <p class="mt-6 text-primary-deep">
+      If your message is time-sensitive, please call us at{' '}
+      {
+        site.contact.phone ? (
+          <a class="text-accent underline underline-offset-2" href={`tel:${site.contact.phone}`}>
+            {site.contact.phone}
+          </a>
+        ) : (
+          <span>the number listed on our contact page</span>
+        )
+      }.
+    </p>
+
+    <p class="mt-10">
+      <a class="text-accent underline underline-offset-2" href="/">Return home</a>
+    </p>
+  </article>
+</BaseLayout>

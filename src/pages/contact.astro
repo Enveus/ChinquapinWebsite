@@ -1,8 +1,11 @@
 ---
 /**
- * Contact page — stub.
- * Renders the address from site config; shows email/phone only when present.
- * TODO(owner): provide a public contact email (and phone if desired).
+ * Contact page.
+ *
+ * Renders the address, email, and phone from site config, plus a Web3Forms-
+ * backed contact form when the access key is configured. We never collect
+ * submissions ourselves — Web3Forms relays the message to the foundation's
+ * inbox and redirects the visitor to /contact/thanks.
  */
 
 import BaseLayout from '@layouts/BaseLayout.astro';
@@ -10,6 +13,20 @@ import Hero from '@components/sections/Hero.astro';
 import { site } from '@config/site';
 
 const address = site.address;
+const formAccessKey = site.contactForm.accessKey;
+const thanksUrl = `${site.url}/contact/thanks`;
+const formAction = 'https://api.web3forms.com/submit';
+const emailSubject = `New contact form submission — ${site.name}`;
+
+const fieldClasses =
+  'mt-2 w-full rounded-md border border-sage/40 bg-paper px-4 py-2.5 ' +
+  'text-primary-deep placeholder:text-sage/70 ' +
+  'focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30';
+const labelClasses = 'block text-xs tracking-[0.3em] uppercase text-sage';
+const submitClasses =
+  'inline-flex items-center justify-center rounded-md bg-primary px-6 py-2.5 ' +
+  'font-semibold text-paper no-underline transition-colors ' +
+  'hover:bg-accent focus-visible:bg-accent';
 ---
 
 <BaseLayout title="Contact" description={`Get in touch with ${site.name}.`}>
@@ -39,7 +56,9 @@ const address = site.address;
           <div>
             <dt class="text-xs tracking-[0.3em] uppercase text-sage">Email</dt>
             <dd class="mt-2">
-              <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a>
+              <a class="text-accent underline underline-offset-2" href={`mailto:${site.contact.email}`}>
+                {site.contact.email}
+              </a>
             </dd>
           </div>
         )
@@ -49,7 +68,9 @@ const address = site.address;
           <div>
             <dt class="text-xs tracking-[0.3em] uppercase text-sage">Phone</dt>
             <dd class="mt-2">
-              <a href={`tel:${site.contact.phone}`}>{site.contact.phone}</a>
+              <a class="text-accent underline underline-offset-2" href={`tel:${site.contact.phone}`}>
+                {site.contact.phone}
+              </a>
             </dd>
           </div>
         )
@@ -57,9 +78,87 @@ const address = site.address;
     </dl>
 
     {
-      !site.contact.email && !site.contact.phone && (
-        <p class="mt-8 text-sm text-sage italic">
-          A public contact email is coming soon. Until then, please use the mailing address above.
+      formAccessKey && (
+        <section class="mt-16 border-t border-sage/20 pt-12" aria-labelledby="contact-form-heading">
+          <h2 id="contact-form-heading" class="font-serif text-3xl text-primary">
+            Send us a message
+          </h2>
+          <p class="mt-3 text-primary-deep">
+            Fill out the form and we'll be in touch. Required fields are marked with an asterisk.
+          </p>
+
+          <form action={formAction} method="POST" class="mt-8 space-y-6">
+            <input type="hidden" name="access_key" value={formAccessKey} />
+            <input type="hidden" name="subject" value={emailSubject} />
+            <input type="hidden" name="from_name" value={site.name} />
+            <input type="hidden" name="redirect" value={thanksUrl} />
+
+            {/* Honeypot — bots fill hidden checkboxes; Web3Forms drops those. */}
+            <input
+              type="checkbox"
+              name="botcheck"
+              tabindex="-1"
+              autocomplete="off"
+              class="hidden"
+              aria-hidden="true"
+            />
+
+            <div>
+              <label for="contact-name" class={labelClasses}>Name <span aria-hidden="true">*</span></label>
+              <input
+                id="contact-name"
+                type="text"
+                name="name"
+                autocomplete="name"
+                required
+                class={fieldClasses}
+              />
+            </div>
+
+            <div>
+              <label for="contact-email" class={labelClasses}>Email <span aria-hidden="true">*</span></label>
+              <input
+                id="contact-email"
+                type="email"
+                name="email"
+                autocomplete="email"
+                required
+                class={fieldClasses}
+              />
+            </div>
+
+            <div>
+              <label for="contact-phone" class={labelClasses}>Phone <span class="lowercase tracking-normal text-sage/80">(optional)</span></label>
+              <input
+                id="contact-phone"
+                type="tel"
+                name="phone"
+                autocomplete="tel"
+                class={fieldClasses}
+              />
+            </div>
+
+            <div>
+              <label for="contact-message" class={labelClasses}>Message <span aria-hidden="true">*</span></label>
+              <textarea
+                id="contact-message"
+                name="message"
+                rows="6"
+                required
+                class={fieldClasses}
+              ></textarea>
+            </div>
+
+            <button type="submit" class={submitClasses}>Send message</button>
+          </form>
+        </section>
+      )
+    }
+
+    {
+      !formAccessKey && (
+        <p class="mt-10 text-sm text-sage italic">
+          An online contact form is coming soon. In the meantime, please reach us by email or phone.
         </p>
       )
     }

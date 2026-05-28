@@ -76,11 +76,20 @@ export const site = {
 
   /**
    * Public contact channels. Only render in UI when a value is present.
-   * TODO(owner): confirm which contact channels should be public.
    */
   contact: {
-    email: null as string | null,
-    phone: null as string | null,
+    email: 'help@chinquapin.foundation' as string | null,
+    phone: '936-671-4534' as string | null,
+  },
+
+  /**
+   * Contact-form delivery. We use Web3Forms (free, no account) — the access
+   * key is a public client-side token (safe to commit) that authorizes posts
+   * to the foundation's email. Rotate by requesting a new key at web3forms.com.
+   */
+  contactForm: {
+    provider: 'web3forms' as const,
+    accessKey: 'c81af3e8-da85-4e51-9527-456cae10c02e' as string | null,
   },
 
   /**

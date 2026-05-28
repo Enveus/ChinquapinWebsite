@@ -131,7 +131,6 @@ concern per commit, with a clear message.
 ## Open items (need owner input — do not invent)
 - [ ] **IRS Letter 947** (501(c)(3) determination letter) — when received, flip
       `site.taxExempt501c3` to `true`. EIN itself is already in config.
-- [ ] **Public contact email** (and phone, if desired)
 - [ ] **Donation platform account + URL** (Every.org recommended for fee-free 501(c)(3))
 - [ ] **Program descriptions** — concrete services for women, children, veterans
 - [ ] **About / origin story** copy
