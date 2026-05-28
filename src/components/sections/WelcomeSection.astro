@@ -1,16 +1,13 @@
 ---
 /**
- * Welcome section — dark green panel with the owner-supplied tree silhouette
- * artwork as a backdrop. The image is layered behind the content; a partial
- * dark gradient overlay keeps the heading and body copy legible against the
- * lighter olive sky in the upper portion of the silhouette.
- *
+ * Welcome section — plain dark green panel with the mission and CTAs.
  * Two-column on desktop (heading left, paragraph right), stacked on mobile.
  * A short sunflower-yellow rule sits beneath the heading as a brand accent.
+ *
+ * The tree silhouette artwork now lives behind the footer (see Footer.astro)
+ * so it appears on every page rather than the home page only.
  */
 
-import { Image } from 'astro:assets';
-import silhouette from '@assets/tree-silhouette.png';
 import DonateButton from '@components/ui/DonateButton.astro';
 
 interface Props {
@@ -29,27 +26,8 @@ const {
 } = Astro.props;
 ---
 
-<section class="relative overflow-hidden bg-primary-deep text-paper">
-  {/* Backdrop: silhouette image fills the section */}
-  <Image
-    src={silhouette}
-    alt=""
-    widths={[640, 960, 1280, 1600, 2000]}
-    sizes="(min-width: 1024px) calc(100vw - 280px), 100vw"
-    class="absolute inset-0 h-full w-full object-cover object-bottom"
-    loading="lazy"
-  />
-
-  {/* Dark tint + gradient so the headline + paragraph stay readable while
-      the tree silhouettes remain visible in the lower portion. */}
-  <div class="absolute inset-0 bg-primary-deep/55" aria-hidden="true"></div>
-  <div
-    class="absolute inset-0 bg-gradient-to-b from-primary-deep/70 via-primary-deep/30 to-primary-deep/60"
-    aria-hidden="true"
-  ></div>
-
-  {/* Content */}
-  <div class="relative mx-auto max-w-6xl px-6 sm:px-10 lg:px-14 py-12 sm:py-14 lg:py-16">
+<section class="bg-primary-deep text-paper">
+  <div class="mx-auto max-w-6xl px-6 sm:px-10 lg:px-14 py-12 sm:py-14 lg:py-16">
     <div class="grid gap-8 lg:grid-cols-[5fr_6fr] lg:gap-16">
       <div>
         {kicker && (

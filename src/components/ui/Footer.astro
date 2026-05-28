@@ -2,70 +2,92 @@
 /**
  * Site footer.
  *
+ * The owner-supplied tree silhouette artwork sits behind the footer on every
+ * page, anchored to the bottom so the dark ground line meets the bottom of
+ * the viewport. A flat dark tint over the artwork keeps the address, contact,
+ * and disclosure text legible while the silhouettes remain visible.
+ *
  * Renders the org name, optional address/contact (omitted when unknown),
  * the 501(c)(3) disclosure with EIN (omitted when unknown), and a small
  * copyright line. We deliberately render less rather than render fake.
- *
- * Disclosure text uses solid colors (not opacity modifiers) so contrast
- * stays predictable against the dark footer background.
  */
 
+import { Image } from 'astro:assets';
+import silhouette from '@assets/tree-silhouette.png';
 import { site } from '@config/site';
 
 const year = new Date().getFullYear();
 const address = site.address;
 ---
 
-<footer class="bg-primary-deep text-paper">
-  <div class="mx-auto max-w-6xl px-6 sm:px-10 lg:px-14 py-8 grid gap-6 sm:grid-cols-2">
-    <div>
-      <p class="font-serif text-2xl text-paper">{site.name}</p>
-      <p class="mt-3 max-w-prose text-sm text-cream">{site.tagline}</p>
-    </div>
+<footer class="relative overflow-hidden bg-primary-deep text-paper">
+  {/* Backdrop: silhouette artwork pinned to the bottom so trees + ground
+      line up with the bottom edge of the viewport. */}
+  <Image
+    src={silhouette}
+    alt=""
+    widths={[640, 960, 1280, 1600, 2000]}
+    sizes="(min-width: 1024px) calc(100vw - 280px), 100vw"
+    class="absolute inset-0 h-full w-full object-cover object-bottom"
+    loading="lazy"
+  />
 
-    <div class="text-sm text-cream space-y-3">
-      {
-        address && (
-          <p>
-            {address.street}
-            <br />
-            {address.city}, {address.region} {address.postalCode}
-          </p>
-        )
-      }
-      {
-        site.contact.email && (
-          <p>
-            <a class="text-water underline underline-offset-2" href={`mailto:${site.contact.email}`}>
-              {site.contact.email}
-            </a>
-          </p>
-        )
-      }
-      {
-        site.contact.phone && (
-          <p>
-            <a class="text-water underline underline-offset-2" href={`tel:${site.contact.phone}`}>
-              {site.contact.phone}
-            </a>
-          </p>
-        )
-      }
-    </div>
-  </div>
+  {/* Dark tint over the artwork — keeps text readable while letting the
+      silhouettes show through clearly. */}
+  <div class="absolute inset-0 bg-primary-deep/65" aria-hidden="true"></div>
 
-  <div class="border-t border-paper/15">
-    <div class="mx-auto max-w-6xl px-6 sm:px-10 lg:px-14 py-4 text-xs text-cream flex flex-col sm:flex-row sm:justify-between gap-2">
-      <p>&copy; {year} {site.legalName}.</p>
-      <p>
+  {/* Content sits on top of the backdrop */}
+  <div class="relative">
+    <div class="mx-auto max-w-6xl px-6 sm:px-10 lg:px-14 py-8 grid gap-6 sm:grid-cols-2">
+      <div>
+        <p class="font-serif text-2xl text-paper">{site.name}</p>
+        <p class="mt-3 max-w-prose text-sm text-cream">{site.tagline}</p>
+      </div>
+
+      <div class="text-sm text-cream space-y-3">
         {
-          site.taxExempt501c3 && site.ein
-            ? `A 501(c)(3) nonprofit · EIN ${site.ein}`
-            : site.ein
-              ? `Texas nonprofit corporation · EIN ${site.ein} · Federal 501(c)(3) status pending`
-              : 'Texas nonprofit corporation · Federal 501(c)(3) status pending'
+          address && (
+            <p>
+              {address.street}
+              <br />
+              {address.city}, {address.region} {address.postalCode}
+            </p>
+          )
         }
-      </p>
+        {
+          site.contact.email && (
+            <p>
+              <a class="text-water underline underline-offset-2" href={`mailto:${site.contact.email}`}>
+                {site.contact.email}
+              </a>
+            </p>
+          )
+        }
+        {
+          site.contact.phone && (
+            <p>
+              <a class="text-water underline underline-offset-2" href={`tel:${site.contact.phone}`}>
+                {site.contact.phone}
+              </a>
+            </p>
+          )
+        }
+      </div>
+    </div>
+
+    <div class="border-t border-paper/15">
+      <div class="mx-auto max-w-6xl px-6 sm:px-10 lg:px-14 py-4 text-xs text-cream flex flex-col sm:flex-row sm:justify-between gap-2">
+        <p>&copy; {year} {site.legalName}.</p>
+        <p>
+          {
+            site.taxExempt501c3 && site.ein
+              ? `A 501(c)(3) nonprofit · EIN ${site.ein}`
+              : site.ein
+                ? `Texas nonprofit corporation · EIN ${site.ein} · Federal 501(c)(3) status pending`
+                : 'Texas nonprofit corporation · Federal 501(c)(3) status pending'
+          }
+        </p>
+      </div>
     </div>
   </div>
 </footer>
