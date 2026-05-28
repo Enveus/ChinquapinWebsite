@@ -1,0 +1,41 @@
+---
+/**
+ * Site footer.
+ *
+ * Renders the org name, optional address/contact (omitted when unknown),
+ * the 501(c)(3) disclosure with EIN (omitted when unknown), and a small
+ * copyright line. We deliberately render less rather than render fake.
+ */
+
+import { site } from '@config/site';
+
+const year = new Date().getFullYear();
+const address = site.address;
+---
+
+<footer class="mt-16 bg-primary-deep text-paper">
+  <div class="mx-auto max-w-6xl px-4 py-10 grid gap-8 sm:grid-cols-2">
+    <div>
+      <p class="font-serif text-xl text-paper">{site.name}</p>
+      <p class="mt-2 max-w-prose text-sm text-paper/80">{site.tagline}</p>
+    </div>
+
+    <div class="text-sm text-paper/80 space-y-2">
+      {
+        address && (
+          <p>
+            {address.street}
+            <br />
+            {address.city}, {address.region} {address.postalCode}
+          </p>
+        )
+      }
+      {site.contact.email && <p><a class="text-water" href={`mailto:${site.contact.email}`}>{site.contact.email}</a></p>}
+      {site.contact.phone && <p><a class="text-water" href={`tel:${site.contact.phone}`}>{site.contact.phone}</a></p>}
+      <p>
+        &copy; {year} {site.legalName}.
+        {site.ein ? ` A 501(c)(3) nonprofit — EIN ${site.ein}.` : ' 501(c)(3) nonprofit.'}
+      </p>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,44 @@
+---
+/**
+ * Site header.
+ *
+ * Branding on the left (links home), primary nav on the right, and a
+ * persistent Donate CTA. Mobile gets a vertical layout via Tailwind; we'll
+ * upgrade to a real drawer when the nav grows.
+ */
+
+import { site } from '@config/site';
+import { primaryNav } from '@config/nav';
+import DonateButton from '@components/ui/DonateButton.astro';
+
+const currentPath = Astro.url.pathname;
+
+function isCurrent(href: string): boolean {
+  if (href === '/') return currentPath === '/';
+  return currentPath === href || currentPath.startsWith(`${href}/`);
+}
+---
+
+<header class="border-b border-sage/40 bg-paper">
+  <div class="mx-auto flex max-w-6xl flex-col items-center gap-4 px-4 py-4 sm:flex-row sm:justify-between">
+    <a href="/" class="text-primary no-underline" aria-label={`${site.name} — home`}>
+      <span class="block font-serif text-xl leading-tight">Chinquapin Ridge</span>
+      <span class="block text-xs tracking-[0.25em] text-sage">PHILANTHROPIC</span>
+    </a>
+
+    <nav aria-label="Primary" class="flex flex-wrap items-center gap-x-6 gap-y-2">
+      {
+        primaryNav.map((item) => (
+          <a
+            href={item.href}
+            class="text-primary-deep no-underline hover:text-accent"
+            aria-current={isCurrent(item.href) ? 'page' : undefined}
+          >
+            {item.label}
+          </a>
+        ))
+      }
+      <DonateButton />
+    </nav>
+  </div>
+</header>

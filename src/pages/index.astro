@@ -1,0 +1,31 @@
+---
+/**
+ * Home page.
+ *
+ * Placeholder hero so the deploy pipeline can be verified end-to-end.
+ * Content will be expanded once the owner supplies program details and
+ * the donation platform URL — until then this serves as a holding page
+ * that introduces the foundation without inventing facts.
+ */
+
+import BaseLayout from '@layouts/BaseLayout.astro';
+import DonateButton from '@components/ui/DonateButton.astro';
+import { site } from '@config/site';
+---
+
+<BaseLayout>
+  <section class="mx-auto max-w-3xl px-4 py-16 sm:py-24 text-center">
+    <p class="text-sm tracking-[0.25em] text-sage uppercase">Rooted in faith</p>
+    <h1 class="mt-4 font-serif text-4xl sm:text-5xl text-primary">
+      {site.tagline}
+    </h1>
+    <p class="mt-6 mx-auto max-w-prose text-lg text-primary-deep">
+      {site.mission}
+    </p>
+
+    <div class="mt-10 flex flex-wrap items-center justify-center gap-4">
+      <DonateButton />
+      <a href="/about" class="text-primary font-semibold">Learn more &rarr;</a>
+    </div>
+  </section>
+</BaseLayout>

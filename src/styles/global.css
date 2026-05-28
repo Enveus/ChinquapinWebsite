@@ -1,0 +1,98 @@
+/**
+ * Global stylesheet.
+ *
+ * Brand tokens live here as CSS custom properties and are exposed to
+ * Tailwind v4 via the `@theme` block. Reach for tokens (`--color-primary`,
+ * `bg-primary`, `text-primary`) instead of literal hex values anywhere in
+ * the app. The palette is the source of truth — see CLAUDE.md for usage rules.
+ */
+
+@import 'tailwindcss';
+
+@theme {
+  /* Brand palette — extracted from the official logo. */
+  --color-primary: #24540c;        /* Deep forest green — headings, primary CTAs */
+  --color-primary-deep: #243c0c;   /* Deepest green — footer, high-contrast text */
+  --color-accent: #3c8424;         /* Foliage — accents, hover, links */
+  --color-sage: #6c8454;           /* Sage — muted text, borders, secondary UI */
+  --color-water: #84cccc;          /* Water blue — soft accents, section bgs */
+  --color-sunflower: #fccc0c;      /* Sunflower yellow — sparing highlights only */
+  --color-paper: #fafaf7;          /* Paper — page background */
+  --color-ink: #1a2410;            /* Body copy ink (derived from primary-deep) */
+
+  /* Type pairing — refined serif for display, clean sans for body. */
+  --font-serif: 'Cormorant Garamond', 'EB Garamond', Georgia, 'Times New Roman', serif;
+  --font-sans: 'Source Sans 3', 'Source Sans Pro', system-ui, sans-serif;
+
+  /* Layout */
+  --container-prose: 65ch;
+}
+
+/* Page defaults */
+html {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-serif);
+  color: var(--color-primary);
+  letter-spacing: -0.01em;
+}
+
+a {
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+
+a:hover {
+  color: var(--color-primary);
+}
+
+/* Visible focus — accessibility is non-negotiable. */
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* Skip link — visually hidden until focused. */
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -3rem;
+  background: var(--color-primary);
+  color: var(--color-paper);
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  text-decoration: none;
+  z-index: 100;
+  transition: top 0.15s ease-out;
+}
+
+.skip-link:focus {
+  top: 1rem;
+}
+
+/* Respect reduced-motion preferences across all animations. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

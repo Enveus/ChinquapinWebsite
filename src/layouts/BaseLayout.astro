@@ -1,0 +1,73 @@
+---
+/**
+ * Root HTML shell shared by every page.
+ *
+ * Owns:
+ *   - <head>: title, description, canonical, OG/Twitter, JSON-LD, favicon
+ *   - Global stylesheet
+ *   - Skip link, header, main landmark, footer
+ *
+ * Page-specific <head> additions go through the `headExtras` slot.
+ */
+
+import '@styles/global.css';
+import { site } from '@config/site';
+import { buildOrganizationJsonLd } from '@lib/jsonld';
+import Header from '@components/ui/Header.astro';
+import Footer from '@components/ui/Footer.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+  /** Override OG image (absolute URL). Defaults to /og-default.png. */
+  ogImage?: string;
+}
+
+const { title, description, ogImage } = Astro.props;
+
+const pageTitle = title ? `${title} — ${site.name}` : site.name;
+const pageDescription = description ?? site.tagline;
+const canonical = new URL(Astro.url.pathname, site.url).toString();
+const ogImageUrl = ogImage ?? new URL('/og-default.png', site.url).toString();
+
+const organizationJsonLd = buildOrganizationJsonLd();
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+
+    <title>{pageTitle}</title>
+    <meta name="description" content={pageDescription} />
+    <link rel="canonical" href={canonical} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDescription} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImageUrl} />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={pageDescription} />
+    <meta name="twitter:image" content={ogImageUrl} />
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
+    <script type="application/ld+json" set:html={JSON.stringify(organizationJsonLd)} is:inline />
+
+    <slot name="headExtras" />
+  </head>
+  <body>
+    <a href="#main" class="skip-link">Skip to content</a>
+    <Header />
+    <main id="main" class="flex-1">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

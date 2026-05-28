@@ -1,0 +1,46 @@
+---
+/**
+ * Donate CTA.
+ *
+ * Resolves the destination from site config — we NEVER hardcode a donation
+ * URL. While the foundation hasn't supplied a hosted-platform URL yet, the
+ * button renders as a disabled placeholder so the layout is correct but
+ * nobody is sent to a dead link.
+ */
+
+import { site } from '@config/site';
+
+interface Props {
+  /** Visual treatment. Default is the high-contrast primary button. */
+  variant?: 'primary' | 'subtle';
+  /** Override label. Defaults to "Donate". */
+  label?: string;
+}
+
+const { variant = 'primary', label = 'Donate' } = Astro.props;
+const href = site.donate.url;
+const isReady = href !== null;
+
+const baseClasses =
+  'inline-flex items-center justify-center rounded-md px-5 py-2.5 font-semibold no-underline transition-colors';
+const primaryClasses =
+  'bg-primary text-paper hover:bg-accent focus-visible:bg-accent';
+const subtleClasses =
+  'border border-primary text-primary hover:bg-primary hover:text-paper';
+const disabledClasses = 'bg-sage text-paper opacity-60 cursor-not-allowed';
+
+const variantClasses = variant === 'primary' ? primaryClasses : subtleClasses;
+const classes = `${baseClasses} ${isReady ? variantClasses : disabledClasses}`;
+---
+
+{
+  isReady ? (
+    <a class={classes} href={href} rel="noopener" target="_blank">
+      {label}
+    </a>
+  ) : (
+    <span class={classes} aria-disabled="true" title="Donation platform not yet configured">
+      {label}
+    </span>
+  )
+}
