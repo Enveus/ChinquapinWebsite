@@ -1,14 +1,16 @@
 ---
 /**
- * Welcome section — the dark green panel that sits directly below the hero
- * on the home page. Two-column on desktop (heading left, paragraph right),
- * stacked on mobile. A short sunflower-yellow rule sits beneath the heading
- * as a brand accent. The decorative tree silhouette band caps the bottom.
+ * Welcome section — dark green panel with the owner-supplied tree silhouette
+ * artwork as a backdrop. The image is layered behind the content; a partial
+ * dark gradient overlay keeps the heading and body copy legible against the
+ * lighter olive sky in the upper portion of the silhouette.
  *
- * Body copy and CTAs use solid colors (not opacity modifiers) so contrast
- * stays predictable on the dark green background.
+ * Two-column on desktop (heading left, paragraph right), stacked on mobile.
+ * A short sunflower-yellow rule sits beneath the heading as a brand accent.
  */
 
+import { Image } from 'astro:assets';
+import silhouette from '@assets/tree-silhouette.png';
 import DonateButton from '@components/ui/DonateButton.astro';
 
 interface Props {
@@ -27,26 +29,45 @@ const {
 } = Astro.props;
 ---
 
-<section class="bg-primary-deep text-paper">
-  <div class="mx-auto max-w-6xl px-6 sm:px-10 lg:px-14 py-16 sm:py-20 lg:py-24">
-    <div class="grid gap-10 lg:grid-cols-[5fr_6fr] lg:gap-20">
+<section class="relative overflow-hidden bg-primary-deep text-paper">
+  {/* Backdrop: silhouette image fills the section */}
+  <Image
+    src={silhouette}
+    alt=""
+    widths={[640, 960, 1280, 1600, 2000]}
+    sizes="(min-width: 1024px) calc(100vw - 280px), 100vw"
+    class="absolute inset-0 h-full w-full object-cover object-bottom"
+    loading="lazy"
+  />
+
+  {/* Dark tint + gradient so the headline + paragraph stay readable while
+      the tree silhouettes remain visible in the lower portion. */}
+  <div class="absolute inset-0 bg-primary-deep/55" aria-hidden="true"></div>
+  <div
+    class="absolute inset-0 bg-gradient-to-b from-primary-deep/70 via-primary-deep/30 to-primary-deep/60"
+    aria-hidden="true"
+  ></div>
+
+  {/* Content */}
+  <div class="relative mx-auto max-w-6xl px-6 sm:px-10 lg:px-14 py-12 sm:py-14 lg:py-16">
+    <div class="grid gap-8 lg:grid-cols-[5fr_6fr] lg:gap-16">
       <div>
         {kicker && (
-          <p class="font-serif italic text-water text-lg sm:text-xl">{kicker}</p>
+          <p class="font-serif italic text-water text-lg">{kicker}</p>
         )}
-        <h2 class="mt-2 font-serif text-4xl sm:text-5xl lg:text-6xl leading-[1.05] text-paper">
+        <h2 class="mt-1 font-serif text-3xl sm:text-4xl lg:text-5xl leading-[1.05] text-paper">
           {heading}
         </h2>
-        <span class="mt-6 block h-1 w-16 bg-sunflower rounded-full" aria-hidden="true"></span>
+        <span class="mt-4 block h-1 w-14 bg-sunflower rounded-full" aria-hidden="true"></span>
       </div>
 
-      <div class="text-cream space-y-5 text-base sm:text-lg leading-relaxed">
+      <div class="text-cream space-y-4 text-base leading-relaxed">
         <slot />
 
-        <div class="flex flex-wrap items-center gap-4 pt-3">
+        <div class="flex flex-wrap items-center gap-3 pt-2">
           <a
             href={secondaryHref}
-            class="inline-flex items-center justify-center rounded-md border border-paper/70 px-5 py-2.5 font-semibold text-paper no-underline hover:bg-paper hover:text-primary-deep transition-colors"
+            class="inline-flex items-center justify-center rounded-md border border-paper/70 px-4 py-2 font-semibold text-paper no-underline hover:bg-paper hover:text-primary-deep transition-colors"
           >
             {secondaryLabel}
           </a>

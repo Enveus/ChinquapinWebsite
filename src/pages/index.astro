@@ -2,17 +2,18 @@
 /**
  * Home page.
  *
- * Hero illustration → dark welcome panel with mission + CTAs → an
- * "audiences we serve" row that primes the visitor for the eventual
- * Programs page. Copy is anchored in the cert's stated purposes
- * (vulnerable populations in East Texas: women, children, veterans);
- * specifics are TODO until the owner supplies program details.
+ * Hero photo → welcome panel with tree-silhouette backdrop + mission + CTAs
+ * → audiences cards. Tightened spacing throughout so the page sits closer
+ * to one screen on desktop while still scrolling cleanly on mobile.
+ *
+ * Copy is anchored in the cert's stated purposes (vulnerable populations in
+ * East Texas: women, children, veterans); specifics are TODO until the
+ * owner supplies program details.
  */
 
 import BaseLayout from '@layouts/BaseLayout.astro';
 import Hero from '@components/sections/Hero.astro';
 import WelcomeSection from '@components/sections/WelcomeSection.astro';
-import TreeSilhouetteBand from '@components/ui/TreeSilhouetteBand.astro';
 import { site } from '@config/site';
 
 interface Audience {
@@ -25,19 +26,19 @@ const audiences: readonly Audience[] = [
   {
     title: 'Women',
     blurb:
-      'Programs that meet women where they are — with practical resources, mentorship, and a community grounded in hope. Specific services coming soon.',
+      'Practical resources, mentorship, and faith-rooted community for women navigating hard seasons.',
     href: '/programs#women',
   },
   {
     title: 'Children',
     blurb:
-      'Educational and family-support efforts focused on strengthening homes and giving children a stable foundation to grow. Specific services coming soon.',
+      'Educational support and family-strengthening efforts that give children a stable foundation.',
     href: '/programs#children',
   },
   {
     title: 'Veterans',
     blurb:
-      'Connection, resources, and dignified support for those who have served and their families across East Texas. Specific services coming soon.',
+      'Connection, resources, and dignified support for those who have served and for their families.',
     href: '/programs#veterans',
   },
 ] as const;
@@ -48,44 +49,33 @@ const audiences: readonly Audience[] = [
 
   <WelcomeSection kicker="Welcome to" heading={site.name}>
     <p>{site.mission}</p>
-    <p>
-      We're a Texas nonprofit corporation rooted in East Texas. Our work serves
-      women, children, and veterans through partnerships with churches, Christian
-      ministries, and community groups.
-    </p>
   </WelcomeSection>
 
-  <TreeSilhouetteBand />
-
   <section class="bg-paper">
-    <div class="mx-auto max-w-6xl px-6 sm:px-10 lg:px-14 py-20 sm:py-24 lg:py-28">
+    <div class="mx-auto max-w-6xl px-6 sm:px-10 lg:px-14 py-10 sm:py-12 lg:py-14">
       <div class="text-center">
-        <p class="font-serif italic text-sage text-lg sm:text-xl">Who we serve</p>
-        <h2 class="mt-2 font-serif text-4xl sm:text-5xl text-primary">
+        <p class="font-serif italic text-sage text-base">Who we serve</p>
+        <h2 class="mt-1 font-serif text-3xl sm:text-4xl text-primary">
           Three audiences. <span class="italic text-accent">One mission.</span>
         </h2>
-        <span class="mt-5 inline-block h-1 w-16 bg-sunflower rounded-full" aria-hidden="true"></span>
-        <p class="mt-6 mx-auto max-w-2xl text-ink text-lg leading-relaxed">
-          Every program we build is shaped by the people it serves. Here's who's at the
-          center of our work.
-        </p>
+        <span class="mt-3 inline-block h-1 w-12 bg-sunflower rounded-full" aria-hidden="true"></span>
       </div>
 
-      <div class="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <div class="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {
           audiences.map((audience) => (
             <a
               href={audience.href}
-              class="group block rounded-2xl border border-sage/30 bg-paper p-7 no-underline transition-all duration-200 hover:shadow-xl hover:-translate-y-0.5 hover:border-accent/60"
+              class="group block rounded-xl border border-sage/30 bg-paper p-5 no-underline transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 hover:border-accent/60"
             >
-              <h3 class="font-serif text-3xl text-primary group-hover:text-accent transition-colors">
+              <h3 class="font-serif text-2xl text-primary group-hover:text-accent transition-colors">
                 {audience.title}
               </h3>
-              <span class="mt-3 block h-0.5 w-10 bg-sunflower rounded-full" aria-hidden="true"></span>
-              <p class="mt-5 text-ink text-base leading-relaxed">
+              <span class="mt-2 block h-0.5 w-8 bg-sunflower rounded-full" aria-hidden="true"></span>
+              <p class="mt-3 text-ink text-sm leading-relaxed">
                 {audience.blurb}
               </p>
-              <p class="mt-5 text-accent text-sm font-semibold tracking-wide">
+              <p class="mt-3 text-accent text-sm font-semibold tracking-wide">
                 Learn more <span aria-hidden="true">&rarr;</span>
               </p>
             </a>
