@@ -10,7 +10,6 @@
  */
 
 import DonateButton from '@components/ui/DonateButton.astro';
-import TreeSilhouetteBand from '@components/ui/TreeSilhouetteBand.astro';
 
 interface Props {
   kicker?: string;
@@ -28,8 +27,8 @@ const {
 } = Astro.props;
 ---
 
-<section class="relative bg-primary-deep text-paper">
-  <div class="mx-auto max-w-6xl px-6 sm:px-10 lg:px-14 pt-16 sm:pt-20 lg:pt-24 pb-28 sm:pb-32 lg:pb-36">
+<section class="bg-primary-deep text-paper">
+  <div class="mx-auto max-w-6xl px-6 sm:px-10 lg:px-14 py-16 sm:py-20 lg:py-24">
     <div class="grid gap-10 lg:grid-cols-[5fr_6fr] lg:gap-20">
       <div>
         {kicker && (
@@ -56,7 +55,4 @@ const {
       </div>
     </div>
   </div>
-
-  {/* Decorative chinquapin silhouette band, anchored at the bottom edge */}
-  <TreeSilhouetteBand class="absolute inset-x-0 bottom-0" />
 </section>

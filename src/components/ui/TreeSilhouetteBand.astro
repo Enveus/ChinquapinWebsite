@@ -1,90 +1,33 @@
 ---
 /**
- * Decorative band of stylized chinquapin tree silhouettes — used as a
- * graphic break at the bottom of dark-background panels. The crowns sit
- * above a thin ground line, with visible trunks so the shapes read as
- * trees rather than floating ovals.
+ * Decorative horizon band — full-width chinquapin tree silhouettes on a
+ * soft olive sky. Used as a visual interlude between sections (e.g. between
+ * the dark welcome panel and the lighter audiences section on the home page).
  *
- * Renders as an inline SVG that fills its container's width. Default
- * fill is the deepest brand green so it reads as a darker silhouette
- * against whatever panel it caps.
+ * Source artwork lives at src/assets/tree-silhouette.png and is processed
+ * through Astro's Image pipeline so the build emits a responsive WebP
+ * srcset instead of shipping the full 1.2 MB original.
+ *
+ * Purely decorative — aria-hidden so screen readers skip it.
  */
 
+import { Image } from 'astro:assets';
+import silhouette from '@assets/tree-silhouette.png';
+
 interface Props {
-  /** SVG fill color. Use a token like `currentColor` or a hex. */
-  fill?: string;
-  /** Extra Tailwind classes for the wrapper. */
+  /** Extra Tailwind classes for the wrapper (e.g. spacing overrides). */
   class?: string;
 }
 
-const { fill = '#243319', class: className = '' } = Astro.props;
-
-// Tree positions and sizes — varied so the band doesn't feel mechanical.
-// crownR is the foliage radius; trunkH is how tall the visible trunk is
-// below the crown; trunkW is trunk width. All coordinates assume a
-// 1600-wide viewBox with the ground line at y=120.
-interface Tree {
-  cx: number;
-  crownR: number;
-  trunkH: number;
-  trunkW: number;
-}
-
-const trees: readonly Tree[] = [
-  { cx: 50, crownR: 38, trunkH: 22, trunkW: 7 },
-  { cx: 130, crownR: 48, trunkH: 26, trunkW: 9 },
-  { cx: 230, crownR: 32, trunkH: 18, trunkW: 6 },
-  { cx: 310, crownR: 44, trunkH: 24, trunkW: 8 },
-  { cx: 410, crownR: 36, trunkH: 20, trunkW: 7 },
-  { cx: 500, crownR: 52, trunkH: 30, trunkW: 10 },
-  { cx: 610, crownR: 40, trunkH: 22, trunkW: 8 },
-  { cx: 700, crownR: 30, trunkH: 16, trunkW: 6 },
-  { cx: 780, crownR: 46, trunkH: 26, trunkW: 9 },
-  { cx: 880, crownR: 34, trunkH: 20, trunkW: 7 },
-  { cx: 970, crownR: 48, trunkH: 28, trunkW: 9 },
-  { cx: 1070, crownR: 38, trunkH: 22, trunkW: 7 },
-  { cx: 1170, crownR: 44, trunkH: 24, trunkW: 8 },
-  { cx: 1260, crownR: 32, trunkH: 18, trunkW: 6 },
-  { cx: 1340, crownR: 50, trunkH: 28, trunkW: 10 },
-  { cx: 1450, crownR: 36, trunkH: 20, trunkW: 7 },
-  { cx: 1550, crownR: 42, trunkH: 24, trunkW: 8 },
-];
-
-const groundY = 120;
+const { class: className = '' } = Astro.props;
 ---
 
-<div class={`pointer-events-none ${className}`} aria-hidden="true">
-  <svg
-    viewBox="0 0 1600 130"
-    preserveAspectRatio="none"
-    xmlns="http://www.w3.org/2000/svg"
-    class="block w-full h-20 sm:h-24"
-  >
-    <g fill={fill}>
-      {/* Ground band — thin baseline so the trees aren't floating. */}
-      <rect x="0" y={groundY - 4} width="1600" height="14" />
-
-      {
-        trees.map((tree) => {
-          // Trunk anchors at the ground; crown sits directly above the trunk
-          // so neither overlaps the other.
-          const trunkX = tree.cx - tree.trunkW / 2;
-          const trunkTop = groundY - tree.trunkH;
-          const crownBottom = trunkTop + tree.crownR * 0.3; // small overlap into trunk for solid join
-          const crownCy = crownBottom - tree.crownR;
-          return (
-            <>
-              <rect x={trunkX} y={trunkTop} width={tree.trunkW} height={tree.trunkH} />
-              <ellipse
-                cx={tree.cx}
-                cy={crownCy}
-                rx={tree.crownR * 0.9}
-                ry={tree.crownR}
-              />
-            </>
-          );
-        })
-      }
-    </g>
-  </svg>
+<div class={`block w-full ${className}`} aria-hidden="true">
+  <Image
+    src={silhouette}
+    alt=""
+    widths={[640, 960, 1280, 1600, 2000]}
+    sizes="(min-width: 1024px) calc(100vw - 280px), 100vw"
+    class="block w-full h-auto"
+  />
 </div>
