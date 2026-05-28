@@ -32,11 +32,13 @@ const address = site.address;
     loading="lazy"
   />
 
-  {/* Gradient tint — darker at the top (where the address/contact text
-      sits) so it reads against the lighter olive sky portion of the
-      artwork; lighter at the bottom so the tree silhouettes stay vivid. */}
+  {/* Two layers stacked: a flat /15 base tint so the trees keep
+      detail, plus a denser top band the address/contact text sits
+      against. The lower portion of the footer shows the silhouette
+      almost unobstructed. */}
+  <div class="absolute inset-0 bg-primary-deep/15" aria-hidden="true"></div>
   <div
-    class="absolute inset-0 bg-gradient-to-b from-primary-deep/75 via-primary-deep/30 to-primary-deep/15"
+    class="absolute inset-x-0 top-0 h-[60%] bg-gradient-to-b from-primary-deep/80 to-primary-deep/0"
     aria-hidden="true"
   ></div>
 
