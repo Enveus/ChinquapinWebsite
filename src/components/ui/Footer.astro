@@ -32,13 +32,11 @@ const address = site.address;
     loading="lazy"
   />
 
-  {/* Two layers stacked: a flat /15 base tint so the trees keep
-      detail, plus a denser top band the address/contact text sits
-      against. The lower portion of the footer shows the silhouette
-      almost unobstructed. */}
-  <div class="absolute inset-0 bg-primary-deep/15" aria-hidden="true"></div>
+  {/* Dark gradient strip across the top half only — covers the address /
+      contact area so the white text reads. The bottom half is intentionally
+      bare so the tree silhouettes show in full. */}
   <div
-    class="absolute inset-x-0 top-0 h-[60%] bg-gradient-to-b from-primary-deep/80 to-primary-deep/0"
+    class="absolute inset-x-0 top-0 h-[55%] bg-gradient-to-b from-primary-deep/95 via-primary-deep/70 to-primary-deep/0"
     aria-hidden="true"
   ></div>
 
